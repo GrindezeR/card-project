@@ -1,0 +1,30 @@
+.input {
+    border: none;
+    font-family: 'Ubuntu', sans-serif;
+    margin: 10px;
+    padding: 5px;
+    font-size: 20px;
+    color: black;
+    outline: none;
+    background: transparent;
+}
+
+.input::placeholder {
+    /*color: gray;*/
+}
+
+.errorInput {
+    box-shadow: 0 4px 5px -3px rgba(232, 58, 21, 1);
+}
+
+.error {
+    color: red;
+    font-family: Bahnschrift, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.superInput {
+    box-shadow: 0 4px 5px -3px rgba(0, 219, 74, 1);
+}

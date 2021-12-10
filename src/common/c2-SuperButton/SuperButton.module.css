@@ -1,0 +1,54 @@
+.default {
+    /*padding: 5px 15px;*/
+    font-weight: 500;
+    background: white;
+    outline: none !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    border: 1px solid #66bf3c;
+    z-index: 1;
+    color: black;
+    margin: 5px;
+}
+
+.default:after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    background: black;
+    transition: all 0.3s ease;
+}
+
+.default:hover {
+    color: white;
+}
+
+.default:hover:after {
+    top: 0;
+    height: 100%;
+}
+
+.default:active {
+    top: 2px;
+}
+
+.default:disabled {
+    opacity: 0.3;
+}
+
+
+.default.red {
+    background: red;
+    color: white;
+    border-color: black;
+}
+
+.default.red:hover {
+    border: 1px solid red;
+}
