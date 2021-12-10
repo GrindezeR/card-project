@@ -13,27 +13,13 @@ function App() {
     return (
         <div className="App">
             <div>
-                <button>
-                    <NavLink to={'/'}>home</NavLink>
-                </button>
-                <button>
-                    <NavLink to={'login'}>login</NavLink>
-                </button>
-                <button>
-                    <NavLink to={'404'}>404</NavLink>
-                </button>
-                <button>
-                    <NavLink to={'profile'}>profile</NavLink>
-                </button>
-                <button>
-                    <NavLink to={'registration'}>registration</NavLink>
-                </button>
-                <button>
-                    <NavLink to={'new_password'}>new_password</NavLink>
-                </button>
-                <button>
-                    <NavLink to={'pass_recovery'}>pass_recovery</NavLink>
-                </button>
+                <button><NavLink to={'/'}>home/test</NavLink></button>
+                <button><NavLink to={'login'}>login</NavLink></button>
+                <button><NavLink to={'404'}>404</NavLink></button>
+                <button><NavLink to={'profile'}>profile111</NavLink></button>
+                <button><NavLink to={'registration'}>registration</NavLink></button>
+                <button><NavLink to={'new_password'}>new_password</NavLink></button>
+                <button><NavLink to={'pass_recovery'}>pass_recovery</NavLink></button>
             </div>
             <Routes>
                 <Route path={'/'} element={<Test/>}/>
