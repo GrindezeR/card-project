@@ -1,0 +1,90 @@
+.registration {
+    display: flex;
+    min-height: calc(100vh - 21px);
+    align-items: center;
+    /*box-sizing: content-box;*/
+}
+
+.registerSection {
+    width: 580px;
+    height: 340px;
+    background-color: #54aed5;
+    border: none;
+    margin: auto;
+    padding: 34px 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.registerArticle {
+    background-color: white;
+    width: 365px;
+    height: 315px;
+    border: 9px solid #56a1be;
+    margin: auto;
+}
+
+h3 {
+    height: 29px;
+    background-color: #f5f7f8;
+    text-align: center;
+    border-bottom: 1px solid #CFCFCF;
+    font-size: 0.95rem;
+    color: #555555;
+    margin-top: 0;
+    padding-top: 11px;
+}
+
+.registerForm {
+    margin-left: 20px;
+    margin-top: 28px;
+}
+
+.email,
+.password {
+    width: 300px;
+    border: 1px solid #c4c4c4;
+    border-radius: 3px;
+    box-shadow: 0 0 1px 5px #f1f4f7;
+    outline: none;
+    margin: 0 0 30px;
+    padding: 10px 10px;
+    font-size: 0.75rem;
+    color: black;
+}
+
+.submit {
+    width: 70px;
+    height: 30px;
+    float: right;
+    margin-top: 3px;
+    margin-right: 22px;
+    background: #dcebf2;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f7fbfd), to(#d2e6ef));
+    background: -moz-linear-gradient(top, #f7fbfd, #d2e6ef);
+    background-image: -o-linear-gradient(top, #f7fbfd, #d2e6ef);
+    border: 1px solid #bbcccf;
+    box-shadow: 0 0 2px 1px #dee4e9;
+    border-radius: 15px;
+    color: #5b7780;
+    cursor: pointer
+}
+
+.submit:hover {
+    box-shadow: 0 0 2px 3px #dee4e9;
+    background: #dcebf2;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f7fbfd), to(#d2e6ef));
+    background: -moz-linear-gradient(top, #f7fbfd, #d2e6ef);
+    background-image: -o-linear-gradient(top, #f7fbfd, #d2e6ef);
+    border: 1px solid #bbcccf;
+    border-radius: 15px;
+    color: #5b7780;
+}
+
+.submit:after {
+    background: inherit;
+}
+
+.inputStyle {
+    color: red;
+    background-color: blue;
+}

@@ -1,0 +1,106 @@
+.loginSection {
+    width: 580px;
+    height: 340px;
+    background-color: #54aed5;
+    border: none;
+    margin: auto;
+    padding-top: 34px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.loginArticle {
+    background-color: white;
+    width: 365px;
+    height: 260px;
+    border: 9px solid #56a1be;
+    margin: auto;
+}
+
+h3 {
+    height: 29px;
+    background-color: #f5f7f8;
+    text-align: center;
+    border-bottom: 1px solid #CFCFCF;
+    font-size: 0.95rem;
+    color: #555555;
+    margin-top: 0;
+    padding-top: 11px;
+}
+
+.loginLegend {
+    margin-top: 50px;
+}
+
+.loginForm {
+    margin-left: 20px;
+    margin-top: 28px;
+}
+
+.username,
+.password {
+    width: 300px;
+    border: 1px solid #c4c4c4;
+    border-radius: 3px;
+    box-shadow: 0 0 1px 5px #f1f4f7;
+    outline: none;
+    margin-bottom: 30px;
+    padding: 10px 10px;
+    font-size: 0.75rem;
+    color: black;
+}
+
+.remember {
+    margin-bottom: 15px;
+    padding-left: 2px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #777777;
+}
+
+.checkbox {
+    float: left;
+}
+
+.checkbox-remember {
+    width: 200px;
+    float: left;
+    margin-top: 8px;
+}
+
+.submit {
+    width: 70px;
+    height: 30px;
+    float: right;
+    margin-top: 3px;
+    margin-right: 22px;
+    background: #dcebf2;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f7fbfd), to(#d2e6ef));
+    background: -moz-linear-gradient(top, #f7fbfd, #d2e6ef);
+    background-image: -o-linear-gradient(top, #f7fbfd, #d2e6ef);
+    border: 1px solid #bbcccf;
+    box-shadow: 0 0 2px 1px #dee4e9;
+    border-radius: 15px;
+    color: #5b7780;
+    cursor: pointer
+}
+
+.submit:hover {
+    box-shadow: 0 0 2px 3px #dee4e9;
+}
+
+.reset {
+    padding: 22px 0 0 0;
+    text-align: center;
+    font-size: .7rem;
+    font-weight: bold;
+    color: white;
+}
+
+.reset a {
+    text-decoration: none;
+    color: white;
+}
+
+.reset a:hover {
+    color: #5b7780;
+}
