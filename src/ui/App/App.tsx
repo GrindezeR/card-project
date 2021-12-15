@@ -10,29 +10,10 @@ import {Profile} from "../pages/Profile/Profile";
 import {useSelector} from "react-redux";
 import {AppStoreType} from "../../bll/store";
 import {LoadingLine} from "../../common/components/loadingLine/LoadingLine";
-<<<<<<< HEAD
+import {CheckEmail} from "../pages/CheckEmail/CheckEmail";
 
 function App() {
     const loading = useSelector<AppStoreType, boolean>((state) => state.app.loading);
-=======
-<<<<<<< HEAD
-import {RequestStatusType} from "../../bll/appReducer";
-import {setIsLoggedInAC} from "../../bll/loginReducer";
-import {CheckEmail} from "../pages/CheckEmail/CheckEmail";
-=======
->>>>>>> 2af60098d8f0ccae20aa062de808d382f74549b1
-
-function App() {
-    const loading = useSelector<AppStoreType, boolean>((state) => state.app.loading)
-    const error = useSelector<AppStoreType, string | null>((state) => state.app.error)
-    const isLoggedIn = useSelector<AppStoreType, boolean>((state) => state.loginPage.isLoggedIn)
-
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        // dispatch(setIsLoggedInAC())
-    }, [dispatch])
->>>>>>> main
 
     return (
         <div className="App">
@@ -44,15 +25,9 @@ function App() {
                 <button><NavLink to={'set-new-password'}>new_password</NavLink></button>
                 <button><NavLink to={'pass_recovery'}>pass_recovery</NavLink></button>
             </div>
-<<<<<<< HEAD
+
             {loading && <LoadingLine/>}
-=======
-<<<<<<< HEAD
-            {loadingStatus && <LoadingLine/>}
-=======
-            {loading && <LoadingLine/>}
->>>>>>> 2af60098d8f0ccae20aa062de808d382f74549b1
->>>>>>> main
+
             <Routes>
                 <Route path={'/'} element={<Login/>}/>
                 <Route path={'login'} element={<Login/>}/>

@@ -1,65 +1,36 @@
 import axios, {AxiosResponse} from "axios";
 
 const instance = axios.create({
-<<<<<<< HEAD
-  // baseURL: 'http://localhost:7542/2.0/',
-  baseURL: 'https://neko-back.herokuapp.com/2.0',
-  withCredentials: true,
-})
-
-export const api = {
-  login(data: LoginRequestType) {
-    return instance.post<LoginRequestType,
-      AxiosResponse<LoginResponseType>>(`auth/login`, {...data})
-  },
-=======
-    baseURL: 'http://localhost:7542/2.0/',
+    // baseURL: 'http://localhost:7542/2.0/',
+    baseURL: 'https://neko-back.herokuapp.com/2.0',
     withCredentials: true,
 })
 
 export const api = {
     login(data: LoginRequestType) {
         return instance.post<LoginRequestType,
-            AxiosResponse<LoginResponseType>>(`auth/login`, data)
+            AxiosResponse<LoginResponseType>>(`auth/login`, {...data})
     },
->>>>>>> main
-
     register(data: RegisterRequestType) {
         return instance.post<RegisterRequestType,
             AxiosResponse<RegisterResponseType>>(`auth/register`, data)
     },
-
     mePost(data: MePostRequestType) {
         return instance.post<MePostRequestType,
             AxiosResponse<MePostResponseType>>(`auth/me`, data)
     },
-
-<<<<<<< HEAD
     mePut(data: MePutRequestType) {
         return instance.put<MePutRequestType,
             AxiosResponse<MePutResponseType>>(`auth/me`, data)
     },
-
     meDelete(data: MeDeleteRequestType) {
-        return instance.put<MeDeleteRequestType,
+        return instance.delete<MeDeleteRequestType,
             AxiosResponse<MeDeleteResponseType>>(`auth/me`, data)
     },
-=======
-  meUpdate(data: MeUpdateRequestType) {
-    return instance.put<MeUpdateRequestType,
-      AxiosResponse<MeUpdateResponseType>>(`auth/me`, data)
-  },
-
-  // updateProfile(data: UpdateProfileDataType) {
-  //   return instance.put(`auth/me`, {...data})
-  // },
-
-  meDelete(data: MeDeleteRequestType) {
-    return instance.put<MeDeleteRequestType,
-      AxiosResponse<MeDeleteResponseType>>(`auth/me`, data)
-  },
->>>>>>> 2af60098d8f0ccae20aa062de808d382f74549b1
-
+    meUpdate(data: MeUpdateRequestType) {
+        return instance.put<MeUpdateRequestType,
+            AxiosResponse<MeUpdateResponseType>>(`auth/me`, data)
+    },
     forgotPassword(passRecoverMail: string) {
         return axios.post<ForgotRequestType,
             AxiosResponse<ForgotResponseType>>(`https://neko-back.herokuapp.com/2.0/auth/forgot`, {
@@ -82,8 +53,10 @@ export type LoginRequestType = {
     password: string
     rememberMe: boolean
 }
+export type MeUpdateResponseType = {
+    updatedUser: LoginResponseType // весь user {}
+}
 export type LoginResponseType = {
-<<<<<<< HEAD
     _id: string;
     email: string;
     name: string;
@@ -95,19 +68,10 @@ export type LoginResponseType = {
     verified: boolean; // подтвердил ли почту
     rememberMe: boolean;
     error?: string;
-=======
-  _id: string;
-  email: string;
-  name: string;
-  avatar?: string;
-  publicCardPacksCount: number; // количество колод
-  created: string;
-  updated: string;
-  isAdmin: boolean;
-  verified: boolean; // подтвердил ли почту
-  rememberMe: boolean;
-  error?: string;
->>>>>>> 2af60098d8f0ccae20aa062de808d382f74549b1
+}
+export type MeUpdateRequestType = {
+    name?: string
+    avatar?: string
 }
 export type RegisterRequestType = {
     email: string
@@ -119,23 +83,13 @@ export type RegisterResponseType = {
 }
 export type MePostRequestType = {}
 export type MePostResponseType = LoginResponseType
-<<<<<<< HEAD
 export type MePutRequestType = {
     name: string
     avatar: string
 }
 export type MePutResponseType = {
-    updateUser: any // весь user {}
+    updatedUser: LoginResponseType // весь user {}
     error?: string
-=======
-export type MeUpdateRequestType = {
-  name?: string
-  avatar?: string
-}
-export type MeUpdateResponseType = {
-  updateUser: any // весь user {}
-  error?: string
->>>>>>> 2af60098d8f0ccae20aa062de808d382f74549b1
 }
 export type MeDeleteRequestType = {}
 export type MeDeleteResponseType = {
@@ -156,14 +110,6 @@ export type SetNewPasswordRequestType = {
     resetPasswordToken: string
 }
 export type SetNewPasswordResponseType = {
-<<<<<<< HEAD
     info: string
     error: string
 }
-=======
-  info: string
-  error: string
-}
-
-//test
->>>>>>> 2af60098d8f0ccae20aa062de808d382f74549b1

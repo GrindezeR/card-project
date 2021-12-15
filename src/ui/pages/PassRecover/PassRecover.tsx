@@ -3,14 +3,9 @@ import {useDispatch, useSelector} from "react-redux";
 import styles from "./PassRecover.module.css";
 import SuperInputText from "../../../common/components/SuperInputText/SuperInputText";
 import SuperButton from "../../../common/components/SuperButton/SuperButton";
-import {
-    errorResponse,
-    RecoverPassInitialStateType,
-    recoveryPass
-} from "../../../bll/passRecoverReducer";
+import {errorResponse, InitialStateType, recoveryPass} from "../../../bll/passRecoverReducer";
 import {AppStoreType} from "../../../bll/store";
 import {LoadingLine} from "../../../common/components/loadingLine/LoadingLine";
-import {RequestStatusType} from "../../../bll/appReducer";
 import {useNavigate} from "react-router-dom";
 
 export const PassRecover = () => {
@@ -19,8 +14,8 @@ export const PassRecover = () => {
 
     const navigate = useNavigate();
 
-    const status = useSelector<AppStoreType, RequestStatusType>(state => state.app.loadingStatus);
-    const recoverPassState = useSelector<AppStoreType, RecoverPassInitialStateType>(state => state.recoverPassPage);
+    const status = useSelector<AppStoreType, boolean>(state => state.app.loading);
+    const recoverPassState = useSelector<AppStoreType, InitialStateType>(state => state.recoverPassPage);
     const dispatch = useDispatch();
 
     const onChangeEnterMail = (event: ChangeEvent<HTMLInputElement>) => {
