@@ -24,7 +24,7 @@ export const setLoginError = (error: string) => ({type: 'LOGIN/SET-ERROR', error
 export const setLoggedIn = () => ({type: 'LOGIN/SET-LOGGED-IN'} as const)
 
 export const logIn = (data: LoginRequestType) => async (dispatch: Dispatch) => {
-    dispatch(setLoadingStatusAC("loading"));
+    dispatch(setLoadingStatusAC(true));
     try {
         const response = await api.login(data);
         response && dispatch(setLoggedIn());
@@ -36,7 +36,7 @@ export const logIn = (data: LoginRequestType) => async (dispatch: Dispatch) => {
             dispatch(setLoginError('Unknown error. Try again later'))
         }
     } finally {
-        dispatch(setLoadingStatusAC("unloading"));
+        dispatch(setLoadingStatusAC(false));
     }
 }
 
