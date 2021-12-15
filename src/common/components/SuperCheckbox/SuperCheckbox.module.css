@@ -1,12 +1,11 @@
 .label {
     /*display: flex;*/
     /*align-items: center;*/
-    /*cursor: pointer;*/
+    cursor: pointer;
 }
 
 .spanClassName {
-    /*border: 1px solid red;*/
-    /*font-family: Ubuntu, sans-serif;*/
+    font-family: Ubuntu, sans-serif;
 }
 
 .checkbox {
