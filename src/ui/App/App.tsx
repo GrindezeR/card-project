@@ -13,6 +13,7 @@ import {AppStoreType} from "../../bll/store";
 import {LoadingLine} from "../../common/components/loadingLine/LoadingLine";
 import {RequestStatusType} from "../../bll/appReducer";
 import {setIsLoggedInAC} from "../../bll/loginReducer";
+import {CheckEmail} from "../pages/CheckEmail/CheckEmail";
 
 function App() {
     const loadingStatus = useSelector<AppStoreType, RequestStatusType>((state) => state.app.loadingStatus)
@@ -33,16 +34,17 @@ function App() {
                 <button><NavLink to={'404'}>404</NavLink></button>
                 <button><NavLink to={'profile'}>profile</NavLink></button>
                 <button><NavLink to={'registration'}>registration</NavLink></button>
-                <button><NavLink to={'new_password'}>new_password</NavLink></button>
+                <button><NavLink to={'set-new-password'}>new_password</NavLink></button>
                 <button><NavLink to={'pass_recovery'}>pass_recovery</NavLink></button>
             </div>
-            {loadingStatus === 'loading' && <LoadingLine/>}
+            {loadingStatus && <LoadingLine/>}
             <Routes>
-                <Route path={'/'} element={<Test/>}/>
+                <Route path={'/'} element={<Login/>}/>
                 <Route path={'login'} element={<Login/>}/>
                 <Route path={'profile'} element={<Profile/>}/>
                 <Route path={'registration'} element={<Registration/>}/>
-                <Route path={'new_password'} element={<NewPass/>}/>
+                <Route path={'check-email'} element={<CheckEmail/>}/>
+                <Route path={'set-new-password/:token'} element={<NewPass/>}/>
                 <Route path={'pass_recovery'} element={<PassRecover/>}/>
                 <Route path={'404'} element={<Error404/>}/>
                 <Route path={'*'} element={<Navigate to={'404'}/>}/>

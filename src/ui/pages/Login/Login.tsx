@@ -41,8 +41,8 @@ export const Login = () => {
       </form>
 
       <div>
-        <button onClick={() => dispatch(setLoadingStatusAC('loading'))}>Loading</button>
-        <button onClick={() => dispatch(setLoadingStatusAC('unloading'))}>Unloading</button>
+        <button onClick={() => dispatch(setLoadingStatusAC(true))}>Loading</button>
+        <button onClick={() => dispatch(setLoadingStatusAC(false))}>Unloading</button>
       </div>
 
 

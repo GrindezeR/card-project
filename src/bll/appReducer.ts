@@ -1,5 +1,5 @@
 const initialState: InitialStateType = {
-  loadingStatus: 'unloading',
+  loadingStatus: false,
   error: null,
   // isInitialized: false
 }
@@ -18,11 +18,11 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
 export const setLoadingStatusAC = (value: RequestStatusType) => ({type: 'app/SET_LOADING_STATUS', value} as const)
 export const setAppErrorAC = (error: string | null) => ({type: 'app/SET-ERROR', error} as const)
 
-type setLoadingStatusAction = ReturnType<typeof setLoadingStatusAC>
+export type setLoadingStatusAction = ReturnType<typeof setLoadingStatusAC>
 type setAppErrorAction = ReturnType<typeof setAppErrorAC>
-export type RequestStatusType = 'loading' | 'unloading'
+export type RequestStatusType = boolean
 type InitialStateType = {
-  loadingStatus: RequestStatusType
+  loadingStatus: boolean,
   error: string | null
   // isInitialized: boolean
 }
