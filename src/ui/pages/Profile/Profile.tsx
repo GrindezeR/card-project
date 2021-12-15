@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../bll/store";
 import {setProfileError, updateProfile} from "../../../bll/profileReducer";
-import {Navigate} from "react-router-dom";
 import styles from "./Profile.module.css";
 import SuperInputText from "../../../common/components/SuperInputText/SuperInputText";
 import SuperButton from "../../../common/components/SuperButton/SuperButton";
