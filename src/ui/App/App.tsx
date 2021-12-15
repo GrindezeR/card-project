@@ -1,7 +1,6 @@
 import React from 'react';
 import {Navigate, NavLink, Route, Routes} from 'react-router-dom';
 import './App.css';
-import {Test} from "../pages/Test";
 import Error404 from "../pages/404/Error404";
 import {Login} from "../pages/Login/Login";
 import {Registration} from "../pages/Register/Registration";
@@ -14,12 +13,11 @@ import {LoadingLine} from "../../common/components/loadingLine/LoadingLine";
 import {RequestStatusType} from "../../bll/appReducer";
 
 function App() {
-    const loadingStatus = useSelector<AppStoreType, RequestStatusType>((state) => state.app.loadingStatus)
+    const loadingStatus = useSelector<AppStoreType, RequestStatusType>((state) => state.app.loadingStatus);
 
     return (
         <div className="App">
             <div>
-                <button><NavLink to={'/'}>home/test</NavLink></button>
                 <button><NavLink to={'login'}>login</NavLink></button>
                 <button><NavLink to={'404'}>404</NavLink></button>
                 <button><NavLink to={'profile'}>profile</NavLink></button>
@@ -29,7 +27,7 @@ function App() {
             </div>
             {loadingStatus === 'loading' && <LoadingLine/>}
             <Routes>
-                <Route path={'/'} element={<Test/>}/>
+                <Route path={'/'} element={<Login/>}/>
                 <Route path={'login'} element={<Login/>}/>
                 <Route path={'profile'} element={<Profile/>}/>
                 <Route path={'registration'} element={<Registration/>}/>

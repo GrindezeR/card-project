@@ -13,17 +13,21 @@ export const loginReducer = (state = initialState, action: LoginActionsType): In
     switch (action.type) {
         case "LOGIN/SET-ERROR":
             return {...state, error: action.error}
+        case "LOGIN/SET-LOGGED-IN":
+            return {...state, isLoggedIn: true}
         default:
             return state;
     }
 }
 
 export const setLoginError = (error: string) => ({type: 'LOGIN/SET-ERROR', error} as const)
+export const setLoggedIn = () => ({type: 'LOGIN/SET-LOGGED-IN'} as const)
 
 export const logIn = (data: LoginRequestType) => async (dispatch: Dispatch) => {
     dispatch(setLoadingStatusAC("loading"));
     try {
-        await api.login(data);
+        const response = await api.login(data);
+        response && dispatch(setLoggedIn());
         // dispatch(ПрофильАС(response.data)); // Инфа для профиля
     } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
@@ -36,7 +40,7 @@ export const logIn = (data: LoginRequestType) => async (dispatch: Dispatch) => {
     }
 }
 
-type LoginActionsType = ReturnType<typeof setLoginError>
+type LoginActionsType = ReturnType<typeof setLoginError> | ReturnType<typeof setLoggedIn>
 
 type InitialStateType = {
     isLoggedIn: boolean
