@@ -10,9 +10,29 @@ import {Profile} from "../pages/Profile/Profile";
 import {useSelector} from "react-redux";
 import {AppStoreType} from "../../bll/store";
 import {LoadingLine} from "../../common/components/loadingLine/LoadingLine";
+<<<<<<< HEAD
 
 function App() {
     const loading = useSelector<AppStoreType, boolean>((state) => state.app.loading);
+=======
+<<<<<<< HEAD
+import {RequestStatusType} from "../../bll/appReducer";
+import {setIsLoggedInAC} from "../../bll/loginReducer";
+import {CheckEmail} from "../pages/CheckEmail/CheckEmail";
+=======
+>>>>>>> 2af60098d8f0ccae20aa062de808d382f74549b1
+
+function App() {
+    const loading = useSelector<AppStoreType, boolean>((state) => state.app.loading)
+    const error = useSelector<AppStoreType, string | null>((state) => state.app.error)
+    const isLoggedIn = useSelector<AppStoreType, boolean>((state) => state.loginPage.isLoggedIn)
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        // dispatch(setIsLoggedInAC())
+    }, [dispatch])
+>>>>>>> main
 
     return (
         <div className="App">
@@ -21,16 +41,25 @@ function App() {
                 <button><NavLink to={'404'}>404</NavLink></button>
                 <button><NavLink to={'profile'}>profile</NavLink></button>
                 <button><NavLink to={'registration'}>registration</NavLink></button>
-                <button><NavLink to={'new_password'}>new_password</NavLink></button>
+                <button><NavLink to={'set-new-password'}>new_password</NavLink></button>
                 <button><NavLink to={'pass_recovery'}>pass_recovery</NavLink></button>
             </div>
+<<<<<<< HEAD
             {loading && <LoadingLine/>}
+=======
+<<<<<<< HEAD
+            {loadingStatus && <LoadingLine/>}
+=======
+            {loading && <LoadingLine/>}
+>>>>>>> 2af60098d8f0ccae20aa062de808d382f74549b1
+>>>>>>> main
             <Routes>
                 <Route path={'/'} element={<Login/>}/>
                 <Route path={'login'} element={<Login/>}/>
                 <Route path={'profile'} element={<Profile/>}/>
                 <Route path={'registration'} element={<Registration/>}/>
-                <Route path={'new_password'} element={<NewPass/>}/>
+                <Route path={'check-email'} element={<CheckEmail/>}/>
+                <Route path={'set-new-password/:token'} element={<NewPass/>}/>
                 <Route path={'pass_recovery'} element={<PassRecover/>}/>
                 <Route path={'404'} element={<Error404/>}/>
                 <Route path={'*'} element={<Navigate to={'404'}/>}/>

@@ -1,7 +1,7 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import {loginReducer} from "./loginReducer";
 import {newPassReducer} from "./newPassReducer";
-import {passRecoverReducer} from "./passRecoverReducer";
+import {recoverPassReducer} from "./passRecoverReducer";
 import {profileReducer} from "./profileReducer";
 import {registerReducer} from "./registerReducer";
 import {appReducer} from "./appReducer";
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
     app: appReducer,
     loginPage: loginReducer,
     newPassPage: newPassReducer,
-    recoverPassPage: passRecoverReducer,
+    recoverPassPage: recoverPassReducer,
     profilePage: profileReducer,
     registerPage: registerReducer,
 })
