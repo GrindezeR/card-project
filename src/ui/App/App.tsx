@@ -10,10 +10,9 @@ import {Profile} from "../pages/Profile/Profile";
 import {useSelector} from "react-redux";
 import {AppStoreType} from "../../bll/store";
 import {LoadingLine} from "../../common/components/loadingLine/LoadingLine";
-import {RequestStatusType} from "../../bll/appReducer";
 
 function App() {
-    const loadingStatus = useSelector<AppStoreType, RequestStatusType>((state) => state.app.loadingStatus);
+    const loading = useSelector<AppStoreType, boolean>((state) => state.app.loading);
 
     return (
         <div className="App">
@@ -25,7 +24,7 @@ function App() {
                 <button><NavLink to={'new_password'}>new_password</NavLink></button>
                 <button><NavLink to={'pass_recovery'}>pass_recovery</NavLink></button>
             </div>
-            {loadingStatus === 'loading' && <LoadingLine/>}
+            {loading && <LoadingLine/>}
             <Routes>
                 <Route path={'/'} element={<Login/>}/>
                 <Route path={'login'} element={<Login/>}/>
