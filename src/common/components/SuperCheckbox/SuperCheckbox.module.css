@@ -1,11 +1,10 @@
 .label {
-    display: flex;
-    align-items: center;
+    /*display: flex;*/
+    /*align-items: center;*/
     cursor: pointer;
 }
 
 .spanClassName {
-    /*border: 1px solid red;*/
     font-family: Ubuntu, sans-serif;
 }
 

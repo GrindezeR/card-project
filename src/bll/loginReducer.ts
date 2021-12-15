@@ -1,34 +1,45 @@
-import {api} from "../dal/api/api";
+import {api, LoginRequestType} from "../dal/api/api";
 import {Dispatch} from "redux";
 import axios from "axios";
+import {setLoadingStatusAC} from "./appReducer";
 
-const initialState = {
-  isLoggedIn: false
+const initialState: InitialStateType = {
+    isLoggedIn: false,
+    rememberMe: false,
+    error: '',
 }
 
-export const loginReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
-  switch (action.type) {
-    case "login/SET-IS-LOGGED-IN":
-      return {...state, isLoggedIn: action.value}
-    default:
-      return state;
-  }
-}
-
-export const setIsLoggedInAC = (value: boolean) =>
-  ({type: 'login/SET-IS-LOGGED-IN', value} as const)
-
-export const loginTC = (data: any) => async (dispatch: Dispatch<ActionsType>) => {
-  try {
-    await api.login(data)
-    dispatch(setIsLoggedInAC(true))
-  } catch (error) {
-    if(axios.isAxiosError(error)) {
-      console.log(error)
+export const loginReducer = (state = initialState, action: LoginActionsType): InitialStateType => {
+    switch (action.type) {
+        case "LOGIN/SET-ERROR":
+            return {...state, error: action.error}
+        default:
+            return state;
     }
-  }
 }
 
-type InitialStateType = { isLoggedIn: boolean }
-type ActionsType = setIsLoggedInAction
-type setIsLoggedInAction = ReturnType<typeof setIsLoggedInAC>
+export const setLoginError = (error: string) => ({type: 'LOGIN/SET-ERROR', error} as const)
+
+export const logIn = (data: LoginRequestType) => async (dispatch: Dispatch) => {
+    dispatch(setLoadingStatusAC("loading"));
+    try {
+        await api.login(data);
+        // dispatch(ПрофильАС(response.data)); // Инфа для профиля
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+            dispatch(setLoginError(error.response.data.error));
+        } else {
+            dispatch(setLoginError('Unknown error. Try again later'))
+        }
+    } finally {
+        dispatch(setLoadingStatusAC("unloading"));
+    }
+}
+
+type LoginActionsType = ReturnType<typeof setLoginError>
+
+type InitialStateType = {
+    isLoggedIn: boolean
+    rememberMe: boolean
+    error: string
+}

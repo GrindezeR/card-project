@@ -12,12 +12,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../bll/store";
 import {LoadingLine} from "../../common/components/loadingLine/LoadingLine";
 import {RequestStatusType} from "../../bll/appReducer";
-import {setIsLoggedInAC} from "../../bll/loginReducer";
 
 function App() {
     const loadingStatus = useSelector<AppStoreType, RequestStatusType>((state) => state.app.loadingStatus)
-    const error = useSelector<AppStoreType, string | null>((state) => state.app.error)
-    const isLoggedIn = useSelector<AppStoreType, boolean>((state) => state.loginPage.isLoggedIn)
+    // const error = useSelector<AppStoreType, string | null>((state) => state.app.error)
+    // const isLoggedIn = useSelector<AppStoreType, boolean>((state) => state.loginPage.isLoggedIn)
 
     const dispatch = useDispatch()
 

@@ -1,74 +1,87 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import SuperInputText from "../../../common/components/SuperInputText/SuperInputText";
 import SuperCheckbox from "../../../common/components/SuperCheckbox/SuperCheckbox";
-import SuperButton from "../../../common/components/SuperButton/SuperButton";
 import {useDispatch, useSelector} from "react-redux";
-import {loginTC} from "../../../bll/loginReducer";
+import {logIn} from "../../../bll/loginReducer";
 import {AppStoreType} from "../../../bll/store";
-import {useNavigate} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import styles from './Login.module.css'
-import {setLoadingStatusAC} from "../../../bll/appReducer";
+import SuperButton from "../../../common/components/SuperButton/SuperButton";
 
 export const Login = () => {
-  const [inputEmail, setInputEmail] = useState('');
-  const [inputPassword, setInputPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
+    const dispatch = useDispatch();
+    const isLoggedIn = useSelector<AppStoreType, boolean>(state => state.loginPage.isLoggedIn);
+    const error = useSelector<AppStoreType, string>(state => state.loginPage.error);
 
-  const dispatch = useDispatch()
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
+    const [emailError, setEmailError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
 
-  const onSubmit = (data: any) => {
-    dispatch(loginTC({email: inputEmail, password: inputPassword, rememberMe: rememberMe}))
-    console.log(data)
-    setInputEmail('')
-    setInputPassword('')
-  }
+    const submitHandler = () => {
+        if (!email) {
+            setEmailError('Email is required!');
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+            setEmailError('Invalid email address');
+        } else if (!password) {
+            setPasswordError('Password is required!')
+        } else if (password.length <= 7) {
+            setPasswordError('Invalid password');
+        } else {
+            dispatch(logIn({email, password, rememberMe}));
+        }
+    }
 
-  const isLoggedIn = useSelector((state: AppStoreType) => state.loginPage.isLoggedIn)
-  const navigate = useNavigate()
-  console.log(isLoggedIn)
+    const onChangeEmailHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.currentTarget.value);
+        setEmailError('');
+    }
+    const onChangePasswordHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.currentTarget.value);
+        setPasswordError('');
+    }
 
-  // if(isLoggedIn) navigate('/')
+    if (isLoggedIn) {
+        return <Navigate to={'/profile'}/>
+    }
 
-  return (
-    <div>
-      <form>
-        <SuperInputText name={'email'} type={'text'} value={inputEmail} onChangeText={setInputEmail}
-                        placeholder={'Email'}/>
-        <SuperInputText name={'password'} type={'password'} value={inputPassword} onChangeText={setInputPassword}
-                        placeholder={'Password'}/>
-        <SuperCheckbox name={'rememberMe'} checked={rememberMe} onChangeChecked={setRememberMe}/>
-        <SuperButton onClick={onSubmit}>Sign in</SuperButton>
-      </form>
-
-      <div>
-        <button onClick={() => dispatch(setLoadingStatusAC('loading'))}>Loading</button>
-        <button onClick={() => dispatch(setLoadingStatusAC('unloading'))}>Unloading</button>
-      </div>
-
-
-      <section className={styles.loginSection}>
-        <article className={styles.loginArticle}>
-          <h3>Login to Web App</h3>
-          <form className={styles.loginForm}>
-            <div>
-              <input className={styles.username} type="text" name="email" placeholder="Email"/>
+    return (
+        <section className={styles.loginSection}>
+            <article className={styles.loginArticle}>
+                <h3>Login to Web App</h3>
+                <div className={styles.loginForm}>
+                    <div className={styles.usernameWrapper}>
+                        <SuperInputText onEnter={submitHandler} className={styles.username}
+                                        spanClassName={styles.error}
+                                        error={emailError}
+                                        onChange={onChangeEmailHandler}
+                                        type="text"
+                                        placeholder="Email"/>
+                    </div>
+                    <div className={styles.passwordWrapper}>
+                        <SuperInputText onEnter={submitHandler}
+                                        className={styles.password}
+                                        spanClassName={styles.error}
+                                        error={passwordError || error}
+                                        onChange={onChangePasswordHandler}
+                                        type="password"
+                                        placeholder="Password"/>
+                    </div>
+                    <div className={styles.checkboxRemember}>
+                        <SuperCheckbox className={styles.checkbox}
+                                       spanClassName={styles.remember}
+                                       onChangeChecked={setRememberMe}>
+                            Remember me on this computer
+                        </SuperCheckbox>
+                    </div>
+                    <SuperButton onClick={submitHandler} className={styles.submit}>Login</SuperButton>
+                </div>
+            </article>
+            <div className={styles.reset}>
+                Forgot your password? <Link to={`/pass_recovery`}>Click here</Link> to reset it or you can
+                register <Link to={'/registration'}>here.</Link>
             </div>
-            <div>
-              <input className={styles.password} type="password" name="password" placeholder="Password"/>
-            </div>
-            <div className={styles.checkboxRemember}>
-              <input className={styles.checkbox} type="checkbox" name="rememberMe"/>
-              <label className={styles.remember} htmlFor="rememberMe">Remember me on this computer</label>
-            </div>
-            <div>
-              <button className={styles.submit}>Login</button>
-            </div>
-          </form>
-        </article>
-        <div className={styles.reset}>
-          Forgot your password? <a href="#">Click here</a> to reset it.
-        </div>
-      </section>
-    </div>
-  );
+        </section>
+    );
 }
