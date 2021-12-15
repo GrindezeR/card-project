@@ -1,27 +1,26 @@
-.registration {
+.profile {
     display: flex;
     min-height: calc(100vh - 21px);
     align-items: center;
     /*box-sizing: content-box;*/
 }
 
-.registerSection {
+.profileSection {
     width: 580px;
-    height: 340px;
     background-color: #54aed5;
-    border: none;
-    margin: auto;
+    margin: 0 auto;
     padding: 34px 0;
     font-family: Arial, Helvetica, sans-serif;
     position: relative;
 }
 
-.registerArticle {
+.profileArticle {
     background-color: white;
     width: 365px;
-    height: 315px;
+    /*height: 515px;*/
     border: 9px solid #56a1be;
-    margin: auto;
+    margin: 0 auto;
+    padding-bottom: 15px;
 }
 
 h3 {
@@ -35,19 +34,22 @@ h3 {
     padding-top: 11px;
 }
 
-.registerForm {
-    margin-left: 20px;
-    margin-top: 28px;
+.profileForm {
+    padding: 0 20px;
 }
 
-.email,
-.password {
+.profileForm div:last-child {
+    text-align: right;
+}
+
+
+.inputs {
     width: 300px;
     border: 1px solid #c4c4c4;
     border-radius: 3px;
     box-shadow: 0 0 1px 5px #f1f4f7;
     outline: none;
-    margin: 0 0 30px;
+    margin: 20px 0 10px 0;
     padding: 10px 10px;
     font-size: 0.75rem;
     color: black;
@@ -56,9 +58,6 @@ h3 {
 .submit {
     width: 70px;
     height: 30px;
-    float: right;
-    margin-top: 3px;
-    margin-right: 22px;
     background: #dcebf2;
     background: -webkit-gradient(linear, left top, left bottom, from(#f7fbfd), to(#d2e6ef));
     background: -moz-linear-gradient(top, #f7fbfd, #d2e6ef);
@@ -97,4 +96,21 @@ h3 {
     color: #ba0505;
     text-align: center;
     width: 100%;
+}
+
+.avatar {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.avatar img {
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+}
+
+.info {
+    padding-bottom: 10px;
+    font-size: 0.95rem;
+    color: #555555;
 }

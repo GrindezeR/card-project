@@ -1,42 +1,54 @@
 import {Dispatch} from "redux";
 import {api} from "../dal/api/api";
 import axios from "axios";
+import {setLoading, setLoadingAction} from "./appReducer";
 
-const initialState = {
-  errorRegister: null
+const initialState: InitialStateType = {
+  errorRegister: null,
+  isRegistered: false
 }
-export const registerReducer = (state: InitialStateType = initialState, action: ActionsType) => {
+export const registerReducer = (state = initialState, action: RegisterActionsType) => {
   switch (action.type) {
-    case "register/SET_ERROR":
+    case "REGISTER/SET_REGISTER":
+      return {...state, isRegistered: action.value}
+    case "REGISTER/SET_ERROR":
       return {...state, errorRegister: action.errorRegister}
     default:
       return state;
   }
 }
 
-const registerAC = (data: any) =>
-  ({type: 'register/REGISTER', data} as const)
-const setErrorAC = (errorRegister: any) =>
-  ({type: 'register/SET_ERROR', errorRegister} as const)
+const setRegister = (value: boolean) =>
+  ({type: 'REGISTER/SET_REGISTER', value} as const)
 
-export const registerTC = (data: RegisterDataType) => async (dispatch: Dispatch<ActionsType>) => {
+export const setRegisterError = (errorRegister: any) =>
+  ({type: 'REGISTER/SET_ERROR', errorRegister} as const)
+
+export const register = (data: RegisterDataType) => async (dispatch: Dispatch<RegisterActionsType>) => {
+  dispatch(setLoading(true))
   try {
-    await api.register(data)
-    dispatch(registerAC(data))
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log({...error})
-      console.log('errrror', error.response?.data.passwordRegExp)
-      dispatch(setErrorAC(error.response?.data.passwordRegExp))
+    const response = await api.register(data)
+    if (response.statusText === 'Created') {
+      dispatch(setRegister(true))
     }
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      if (error.response.data.isEmailValid && !error.response.data.isPassValid) {
+        dispatch(setRegisterError(error.response.data.passwordRegExp))
+      } else {
+        dispatch(setRegisterError(error.response.data.error))
+      }
+    }
+  } finally {
+    dispatch(setLoading(false))
   }
 }
 
-type RegisterAction = ReturnType<typeof registerAC>
-type SetErrorAction = ReturnType<typeof setErrorAC>
-type ActionsType = RegisterAction | SetErrorAction
+type SetRegisterAction = ReturnType<typeof setRegister>
+type SetErrorAction = ReturnType<typeof setRegisterError>
+type RegisterActionsType = SetRegisterAction | SetErrorAction | setLoadingAction
 export type RegisterDataType = {
   email: string
   password: string
 }
-type InitialStateType = { errorRegister: string | null }
+type InitialStateType = { errorRegister: string | null, isRegistered: boolean }

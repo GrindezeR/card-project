@@ -1,29 +1,28 @@
 const initialState: InitialStateType = {
-  loadingStatus: 'unloading',
+  loading: false,
   error: null,
-  // isInitialized: false
 }
 
 export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
-    case "app/SET_LOADING_STATUS":
-      return {...state, loadingStatus: action.value}
-    case "app/SET-ERROR":
+    case "APP/SET_LOADING_STATUS":
+      return {...state, loading: action.value}
+    case "APP/SET-ERROR":
       return {...state, error: action.error}
     default:
       return state;
   }
 }
 
-export const setLoadingStatusAC = (value: RequestStatusType) => ({type: 'app/SET_LOADING_STATUS', value} as const)
-export const setAppErrorAC = (error: string | null) => ({type: 'app/SET-ERROR', error} as const)
+export const setLoading = (value: boolean) => ({type: 'APP/SET_LOADING_STATUS', value} as const)
+export const setAppErrorAC = (error: string | null) => ({type: 'APP/SET-ERROR', error} as const)
 
-type setLoadingStatusAction = ReturnType<typeof setLoadingStatusAC>
+export type setLoadingAction = ReturnType<typeof setLoading>
 type setAppErrorAction = ReturnType<typeof setAppErrorAC>
-export type RequestStatusType = 'loading' | 'unloading'
+// export type RequestStatusType = b
 type InitialStateType = {
-  loadingStatus: RequestStatusType
+  loading: boolean
   error: string | null
   // isInitialized: boolean
 }
-type ActionsType = setLoadingStatusAction | setAppErrorAction
+type ActionsType = setLoadingAction | setAppErrorAction

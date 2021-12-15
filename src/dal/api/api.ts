@@ -22,10 +22,14 @@ export const api = {
       AxiosResponse<MePostResponseType>>(`auth/me`, data)
   },
 
-  mePut(data: MePutRequestType) {
-    return instance.put<MePutRequestType,
-      AxiosResponse<MePutResponseType>>(`auth/me`, data)
+  meUpdate(data: MeUpdateRequestType) {
+    return instance.put<MeUpdateRequestType,
+      AxiosResponse<MeUpdateResponseType>>(`auth/me`, data)
   },
+
+  // updateProfile(data: UpdateProfileDataType) {
+  //   return instance.put(`auth/me`, {...data})
+  // },
 
   meDelete(data: MeDeleteRequestType) {
     return instance.put<MeDeleteRequestType,
@@ -53,8 +57,8 @@ export type LoginResponseType = {
   name: string;
   avatar?: string;
   publicCardPacksCount: number; // количество колод
-  created: Date;
-  updated: Date;
+  created: string;
+  updated: string;
   isAdmin: boolean;
   verified: boolean; // подтвердил ли почту
   rememberMe: boolean;
@@ -70,11 +74,11 @@ export type RegisterResponseType = {
 }
 export type MePostRequestType = {}
 export type MePostResponseType = LoginResponseType
-export type MePutRequestType = {
-  name: string
-  avatar: string
+export type MeUpdateRequestType = {
+  name?: string
+  avatar?: string
 }
-export type MePutResponseType = {
+export type MeUpdateResponseType = {
   updateUser: any // весь user {}
   error?: string
 }

@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {Navigate, NavLink, Route, Routes} from 'react-router-dom';
 import './App.css';
-import {Test} from "../pages/Test";
 import Error404 from "../pages/404/Error404";
 import {Login} from "../pages/Login/Login";
 import {Registration} from "../pages/Register/Registration";
@@ -11,11 +10,9 @@ import {Profile} from "../pages/Profile/Profile";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../bll/store";
 import {LoadingLine} from "../../common/components/loadingLine/LoadingLine";
-import {RequestStatusType} from "../../bll/appReducer";
-import {setIsLoggedInAC} from "../../bll/loginReducer";
 
 function App() {
-    const loadingStatus = useSelector<AppStoreType, RequestStatusType>((state) => state.app.loadingStatus)
+    const loading = useSelector<AppStoreType, boolean>((state) => state.app.loading)
     const error = useSelector<AppStoreType, string | null>((state) => state.app.error)
     const isLoggedIn = useSelector<AppStoreType, boolean>((state) => state.loginPage.isLoggedIn)
 
@@ -36,9 +33,9 @@ function App() {
                 <button><NavLink to={'new_password'}>new_password</NavLink></button>
                 <button><NavLink to={'pass_recovery'}>pass_recovery</NavLink></button>
             </div>
-            {loadingStatus === 'loading' && <LoadingLine/>}
+            {loading && <LoadingLine/>}
             <Routes>
-                <Route path={'/'} element={<Test/>}/>
+                <Route path={'/'} element={<Login/>}/>
                 <Route path={'login'} element={<Login/>}/>
                 <Route path={'profile'} element={<Profile/>}/>
                 <Route path={'registration'} element={<Registration/>}/>
