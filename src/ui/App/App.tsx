@@ -9,7 +9,7 @@ import {PassRecover} from "../pages/PassRecover/PassRecover";
 import {Profile} from "../pages/Profile/Profile";
 import {useSelector} from "react-redux";
 import {AppStoreType} from "../../bll/store";
-import {LoadingLine} from "../../common/components/loadingLine/LoadingLine";
+import {LoadingLine} from "../../common/components/LoadingLine/LoadingLine";
 import {CheckEmail} from "../pages/CheckEmail/CheckEmail";
 
 function App() {
@@ -17,17 +17,7 @@ function App() {
 
     return (
         <div className="App">
-            <div>
-                <button><NavLink to={'login'}>login</NavLink></button>
-                <button><NavLink to={'404'}>404</NavLink></button>
-                <button><NavLink to={'profile'}>profile</NavLink></button>
-                <button><NavLink to={'registration'}>registration</NavLink></button>
-                <button><NavLink to={'set-new-password'}>new_password</NavLink></button>
-                <button><NavLink to={'pass_recovery'}>pass_recovery</NavLink></button>
-            </div>
-
             {loading && <LoadingLine/>}
-
             <Routes>
                 <Route path={'/'} element={<Login/>}/>
                 <Route path={'login'} element={<Login/>}/>

@@ -5,7 +5,7 @@ import SuperInputText from "../../../common/components/SuperInputText/SuperInput
 import SuperButton from "../../../common/components/SuperButton/SuperButton";
 import {errorResponse, InitialStateType, recoveryPass} from "../../../bll/passRecoverReducer";
 import {AppStoreType} from "../../../bll/store";
-import {LoadingLine} from "../../../common/components/loadingLine/LoadingLine";
+import {LoadingLine} from "../../../common/components/LoadingLine/LoadingLine";
 import {useNavigate} from "react-router-dom";
 
 export const PassRecover = () => {
