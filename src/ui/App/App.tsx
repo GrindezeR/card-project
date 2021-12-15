@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Navigate, NavLink, Route, Routes} from 'react-router-dom';
 import './App.css';
 import {Test} from "../pages/Test";
@@ -8,21 +8,13 @@ import {Registration} from "../pages/Register/Registration";
 import {NewPass} from "../pages/NewPass/NewPass";
 import {PassRecover} from "../pages/PassRecover/PassRecover";
 import {Profile} from "../pages/Profile/Profile";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {AppStoreType} from "../../bll/store";
 import {LoadingLine} from "../../common/components/loadingLine/LoadingLine";
 import {RequestStatusType} from "../../bll/appReducer";
 
 function App() {
     const loadingStatus = useSelector<AppStoreType, RequestStatusType>((state) => state.app.loadingStatus)
-    // const error = useSelector<AppStoreType, string | null>((state) => state.app.error)
-    // const isLoggedIn = useSelector<AppStoreType, boolean>((state) => state.loginPage.isLoggedIn)
-
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        // dispatch(setIsLoggedInAC())
-    }, [dispatch])
 
     return (
         <div className="App">
