@@ -1,34 +1,58 @@
-import {api} from "../dal/api/api";
+import {api, LoginRequestType, LoginResponseType} from "../dal/api/api";
 import {Dispatch} from "redux";
 import axios from "axios";
+import {setLoading} from "./appReducer";
+import {setProfileData} from "./profileReducer";
 
-const initialState = {
-  isLoggedIn: false
+const initialState: InitialStateType = {
+  isLoggedIn: false,
+  email: '',
+  password: '',
+  rememberMe: false,
+  error: '',
 }
 
-export const loginReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const loginReducer = (state = initialState, action: LoginActionsType): InitialStateType => {
   switch (action.type) {
-    case "login/SET-IS-LOGGED-IN":
-      return {...state, isLoggedIn: action.value}
+    case "LOGIN/SET-LOGIN-DATA":
+      return {...state, ...action.data, error: '', isLoggedIn: true}
+    case "LOGIN/SET-ERROR":
+      return {...state, error: action.error}
     default:
       return state;
   }
 }
 
-export const setIsLoggedInAC = (value: boolean) =>
-  ({type: 'login/SET-IS-LOGGED-IN', value} as const)
+export const setLoginData = (data: LoginResponseType) => {
+  return {type: 'LOGIN/SET-LOGIN-DATA', data} as const
+}
+export const setLoginError = (error: string) => {
+  return {type: 'LOGIN/SET-ERROR', error} as const
+}
 
-export const loginTC = (data: any) => async (dispatch: Dispatch<ActionsType>) => {
+export const logIn = (data: LoginRequestType) => async (dispatch: Dispatch) => {
+  dispatch(setLoading(true));
   try {
-    await api.login(data)
-    dispatch(setIsLoggedInAC(true))
+    const response = await api.login(data);
+    console.log(response.data)
+    dispatch(setLoginData(response.data));
+    dispatch(setProfileData(response.data));
   } catch (error) {
-    if(axios.isAxiosError(error)) {
-      console.log(error)
+    if (axios.isAxiosError(error) && error.response) {
+      dispatch(setLoginError(error.response.data.error));
     }
+  } finally {
+    dispatch(setLoading(false));
   }
 }
 
-type InitialStateType = { isLoggedIn: boolean }
-type ActionsType = setIsLoggedInAction
-type setIsLoggedInAction = ReturnType<typeof setIsLoggedInAC>
+type LoginActionsType = ReturnType<typeof setLoginData>
+  | ReturnType<typeof setLoginError>
+
+type InitialStateType = {
+  isLoggedIn: boolean
+  email: string
+  password: string
+  rememberMe: boolean
+  error: string
+}

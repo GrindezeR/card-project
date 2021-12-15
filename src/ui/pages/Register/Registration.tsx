@@ -1,33 +1,37 @@
 import React, {useState} from "react";
 import SuperInputText from "../../../common/components/SuperInputText/SuperInputText";
 import SuperButton from "../../../common/components/SuperButton/SuperButton";
-import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {registerTC} from "../../../bll/registerReducer";
+import {register, setRegisterError} from "../../../bll/registerReducer";
 import styles from "./Register.module.css";
 import {AppStoreType} from "../../../bll/store";
+import {Navigate} from "react-router-dom";
 
 export const Registration = () => {
-  const [inputEmail, setInputEmail] = useState('');
-  const [inputPassword, setInputPassword] = useState('');
-  const [inputPasswordControl, setInputPasswordControl] = useState('');
-  const errorRegister = useSelector<AppStoreType, string | null>((state) => state.registerPage.errorRegister)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const isRegistered = useSelector<AppStoreType, boolean>(state => state.registerPage.isRegistered);
+  const error = useSelector<AppStoreType, string>(state => state.registerPage.errorRegister);
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordCheck, setPasswordCheck] = useState('');
 
   const onSubmit = () => {
-    // if (inputPassword && inputPassword === inputPasswordControl) {
-    //   const data = {email: inputEmail, password: inputPassword,}
-    //   dispatch(registerTC(data))
-    //   alert(inputEmail)
-    //   console.log(data)
-    // } else {
-    //   //some error
-    // }
-      const data = {email: inputEmail, password: inputPassword,}
-    dispatch(registerTC(data))
-    alert(inputEmail)
-    console.log(data)
+    if (!email || !password) {
+      dispatch(setRegisterError('Email and password is required!'));
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+      dispatch(setRegisterError('Invalid email address'));
+    } else if (password.length <= 7) {
+      dispatch(setRegisterError('Invalid password'));
+    } else if (password !== passwordCheck) {
+      dispatch(setRegisterError('Passwords must match'));
+    } else {
+      dispatch(register({email, password}));
+    }
+  }
 
+  if (isRegistered) {
+    return <Navigate to={'/login'}/>
   }
 
   return (
@@ -41,8 +45,8 @@ export const Registration = () => {
                 className={styles.email}
                 name={'email'}
                 type={'text'}
-                value={inputEmail}
-                onChangeText={setInputEmail}
+                value={email}
+                onChangeText={setEmail}
                 placeholder={'Email'}
               />
             </div>
@@ -51,8 +55,8 @@ export const Registration = () => {
                 className={styles.password}
                 name={'password'}
                 type={'password'}
-                value={inputPassword}
-                onChangeText={setInputPassword}
+                value={password}
+                onChangeText={setPassword}
                 placeholder={'Password'}
               />
             </div>
@@ -61,18 +65,23 @@ export const Registration = () => {
                 className={styles.password}
                 name={'passwordControl'}
                 type={'password'}
-                value={inputPasswordControl}
-                onChangeText={setInputPasswordControl}
+                value={passwordCheck}
+                onChangeText={setPasswordCheck}
                 placeholder={'Password'}
               />
             </div>
             <div>
-              <SuperButton className={styles.submit} onClick={onSubmit}>Sign in</SuperButton>
+              <SuperButton
+                className={styles.submit}
+                onClick={onSubmit}
+                // disabled={isDisabled}
+              >Sign in</SuperButton>
             </div>
           </div>
         </article>
-        {errorRegister && <div className={'error'}>Error: {errorRegister}</div>}
+        {/*{error && <div className={sc.error}>Error: {error}</div>}*/}
 
+        {error && <div className={styles.error}>{error}</div>}
       </section>
     </div>
   );

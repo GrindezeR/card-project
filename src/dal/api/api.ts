@@ -21,6 +21,7 @@ export const api = {
             AxiosResponse<MePostResponseType>>(`auth/me`, data)
     },
 
+<<<<<<< HEAD
     mePut(data: MePutRequestType) {
         return instance.put<MePutRequestType,
             AxiosResponse<MePutResponseType>>(`auth/me`, data)
@@ -30,6 +31,21 @@ export const api = {
         return instance.put<MeDeleteRequestType,
             AxiosResponse<MeDeleteResponseType>>(`auth/me`, data)
     },
+=======
+  meUpdate(data: MeUpdateRequestType) {
+    return instance.put<MeUpdateRequestType,
+      AxiosResponse<MeUpdateResponseType>>(`auth/me`, data)
+  },
+
+  // updateProfile(data: UpdateProfileDataType) {
+  //   return instance.put(`auth/me`, {...data})
+  // },
+
+  meDelete(data: MeDeleteRequestType) {
+    return instance.put<MeDeleteRequestType,
+      AxiosResponse<MeDeleteResponseType>>(`auth/me`, data)
+  },
+>>>>>>> 2af60098d8f0ccae20aa062de808d382f74549b1
 
     forgotPassword(passRecoverMail: string) {
         return axios.post<ForgotRequestType,
@@ -54,6 +70,7 @@ export type LoginRequestType = {
     rememberMe: boolean
 }
 export type LoginResponseType = {
+<<<<<<< HEAD
     _id: string;
     email: string;
     name: string;
@@ -65,6 +82,19 @@ export type LoginResponseType = {
     verified: boolean; // подтвердил ли почту
     rememberMe: boolean;
     error?: string;
+=======
+  _id: string;
+  email: string;
+  name: string;
+  avatar?: string;
+  publicCardPacksCount: number; // количество колод
+  created: string;
+  updated: string;
+  isAdmin: boolean;
+  verified: boolean; // подтвердил ли почту
+  rememberMe: boolean;
+  error?: string;
+>>>>>>> 2af60098d8f0ccae20aa062de808d382f74549b1
 }
 export type RegisterRequestType = {
     email: string
@@ -76,6 +106,7 @@ export type RegisterResponseType = {
 }
 export type MePostRequestType = {}
 export type MePostResponseType = LoginResponseType
+<<<<<<< HEAD
 export type MePutRequestType = {
     name: string
     avatar: string
@@ -83,6 +114,15 @@ export type MePutRequestType = {
 export type MePutResponseType = {
     updateUser: any // весь user {}
     error?: string
+=======
+export type MeUpdateRequestType = {
+  name?: string
+  avatar?: string
+}
+export type MeUpdateResponseType = {
+  updateUser: any // весь user {}
+  error?: string
+>>>>>>> 2af60098d8f0ccae20aa062de808d382f74549b1
 }
 export type MeDeleteRequestType = {}
 export type MeDeleteResponseType = {
@@ -103,6 +143,14 @@ export type SetNewPasswordRequestType = {
     resetPasswordToken: string
 }
 export type SetNewPasswordResponseType = {
+<<<<<<< HEAD
     info: string
     error: string
 }
+=======
+  info: string
+  error: string
+}
+
+//test
+>>>>>>> 2af60098d8f0ccae20aa062de808d382f74549b1
