@@ -4,7 +4,7 @@ import SuperButton from "../../../common/components/SuperButton/SuperButton";
 import SuperInputText from "../../../common/components/SuperInputText/SuperInputText";
 import SuperCheckbox from "../../../common/components/SuperCheckbox/SuperCheckbox";
 import {AppStoreType} from "../../../bll/store";
-import {logIn} from "../../../bll/loginReducer";
+import {logIn, setLoginError} from "../../../bll/loginReducer";
 import {Link, Navigate} from "react-router-dom";
 import commonStyles from "../../../common/styles/commonStyles.module.css";
 import styles from './Login.module.css';
@@ -32,6 +32,7 @@ export const Login = () => {
             setPasswordError('Invalid password');
         } else {
             dispatch(logIn({email, password, rememberMe}));
+            dispatch(setLoginError(''));
             setEmailError('');
             setPasswordError('');
         }
@@ -84,7 +85,7 @@ export const Login = () => {
                         <SuperButton
                             onClick={submitHandler}
                             className={`${commonStyles.button} ${styles.button}`}>
-                            Login
+                            Log in
                         </SuperButton>
                     </div>
                 </article>

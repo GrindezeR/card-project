@@ -6,7 +6,7 @@ import {register, setRegisterError} from "../../../bll/registerReducer";
 import commonStyles from "../../../common/styles/commonStyles.module.css";
 import styles from "./Register.module.css";
 import {AppStoreType} from "../../../bll/store";
-import {Navigate} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 
 export const Registration = () => {
     const dispatch = useDispatch();
@@ -75,17 +75,17 @@ export const Registration = () => {
                                 placeholder={'Password'}
                             />
                         </div>
-                        <div>
+                        <div className={styles.btnWrapper}>
+                            <SuperButton className={commonStyles.button}>
+                                <Link to={'/login'}>Log in</Link>
+                            </SuperButton>
                             <SuperButton
-                              className={[commonStyles.button, styles.button].join(' ')}
+                                className={commonStyles.button}
                                 onClick={onSubmit}
-                                // disabled={isDisabled}
                             >Sign in</SuperButton>
                         </div>
                     </div>
                 </article>
-                {/*{error && <div className={sc.error}>Error: {error}</div>}*/}
-
                 {error && <div className={styles.error}>{error}</div>}
             </section>
         </div>
