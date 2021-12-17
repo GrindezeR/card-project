@@ -1,5 +1,5 @@
-import React, {ChangeEvent, useState, useEffect} from "react";
-import {useParams, useNavigate} from "react-router-dom";
+import React, {ChangeEvent, useState} from "react";
+import {Navigate, useParams} from "react-router-dom";
 import commonStyles from "../../../common/styles/commonStyles.module.css";
 import styles from "./NewPass.module.css"
 import SuperInputText from "../../../common/components/SuperInputText/SuperInputText";
@@ -7,12 +7,8 @@ import SuperButton from "../../../common/components/SuperButton/SuperButton";
 import {useDispatch, useSelector} from "react-redux";
 import {createNewPassword, errorResponse, NewPassInitialStateType} from "../../../bll/newPassReducer";
 import {AppStoreType} from "../../../bll/store";
-import {LoadingLine} from "../../../common/components/LoadingLine/LoadingLine";
 
 export const NewPass = () => {
-
-    const navigate = useNavigate();
-
     const status = useSelector<AppStoreType, boolean>(state => state.app.loading);
     const setNewPassState = useSelector<AppStoreType, NewPassInitialStateType>(state => state.newPassPage);
     const dispatch = useDispatch();
@@ -31,47 +27,53 @@ export const NewPass = () => {
         setConfirmPassword(event.currentTarget.value);
     }
 
-    const onClickCreatePassword = () => {
-        token && dispatch(createNewPassword(newPassword, token));
+    const onSubmit = () => {
+        if (!newPassword || !confirmPassword) {
+            dispatch(errorResponse('Password is required!'))
+        } else if (newPassword !== confirmPassword) {
+            dispatch(errorResponse('Passwords should be equal!'))
+        } else if (newPassword.length <= 7) {
+            dispatch(errorResponse('Invalid password'))
+        } else {
+            dispatch(createNewPassword(newPassword, token as string));
+        }
     }
 
-    useEffect(() => {
-        if (setNewPassState.setNewPassword) {
-            navigate("/login");
-        }
-    }, [setNewPassState.setNewPassword, navigate]);
+    if (setNewPassState.setNewPassword) {
+        return <Navigate to={"/login"}/>;
+    }
 
     return (
         <div className={commonStyles.wrapper}>
-            {/*{status && <LoadingLine/>}*/}
             <section className={commonStyles.section}>
                 <article className={commonStyles.article}>
                     <h3>Create new password</h3>
                     <div className={commonStyles.form}>
                         <div>
                             <SuperInputText
+                                onEnter={onSubmit}
                                 className={commonStyles.input}
                                 name={'new password'}
-                                type={'text'}
+                                type={'password'}
                                 value={newPassword}
                                 onChange={onChangeNewPassword}
-                                placeholder={'New password'}
-                                error={setNewPassState.error}
-                            />
+                                placeholder={'New password'}/>
                             <SuperInputText
+                                onEnter={onSubmit}
                                 className={commonStyles.input}
+                                spanClassName={`${commonStyles.error} ${styles.error}`}
                                 name={'confirm password'}
-                                type={'text'}
+                                type={'password'}
                                 value={confirmPassword}
                                 onChange={onChangeCheckPassword}
                                 placeholder={'Confirm password'}
-                            />
+                                error={setNewPassState.error}/>
                         </div>
                         <div>
-                            <SuperButton className={`${commonStyles.button} ${styles.button}`}
-                                         onClick={onClickCreatePassword}
-                                         disabled={newPassword !== confirmPassword || status}
-                            >
+                            <SuperButton
+                                className={`${commonStyles.button} ${status && commonStyles.disabled} ${styles.button} `}
+                                onClick={onSubmit}
+                                disabled={status}>
                                 Create password
                             </SuperButton>
                         </div>

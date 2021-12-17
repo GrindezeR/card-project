@@ -6,7 +6,7 @@
 
 .section {
     width: 580px;
-    background-color: #54aed5;
+    /*background-color: #54aed5;*/
     margin: 0 auto;
     padding: 34px 0;
     font-family: Arial, Helvetica, sans-serif;
@@ -78,6 +78,21 @@
 
 .button:after {
     background: inherit;
+}
+
+.error {
+    position: absolute;
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+    left: 0;
+    padding: 5px 0;
+    color: red;
+    font-family: Bahnschrift, sans-serif;
+}
+
+.disabled {
+    opacity: .5;
 }
 
 

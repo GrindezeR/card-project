@@ -1,9 +1,17 @@
-.button {
+.button, .disabled {
     width: 90px;
     height: 40px;
+    margin-top: 35px;
 }
 
 .error {
-    color: mediumblue;
+    position: absolute;
+    font-size: 14px;
     text-align: center;
+    width: 100%;
+    left: 0;
+    top: 160px;
+    padding: 5px 0;
+    color: red;
+    font-family: Bahnschrift, sans-serif;
 }

@@ -25,6 +25,21 @@ export const profileReducer = (state = initialState, action: ProfileActionsType)
             return {...state, name: action.data.name, avatar: action.data.avatar}
         case "PROFILE/SET-PROFILE-ERROR":
             return {...state, error: action.error}
+        case "PROFILE/SET-PROFILE-DELETE-DATA":
+            return {
+                _id: '',
+                email: '',
+                name: '',
+                avatar: '',
+                publicCardPacksCount: 0,
+                isAdmin: false,
+                verified: false,
+                rememberMe: false,
+                error: '',
+                token: '',
+                created: null,
+                updated: null,
+            };
         default:
             return state;
     }
@@ -39,13 +54,15 @@ export const updateProfileData = (data: LoginResponseType) => {
 export const setProfileError = (error: string) => {
     return {type: 'PROFILE/SET-PROFILE-ERROR', error} as const
 }
+export const setProfileDeleteData = () => {
+    return {type: 'PROFILE/SET-PROFILE-DELETE-DATA'} as const
+}
 
 
 export const updateProfile = (data: MeUpdateRequestType) => async (dispatch: Dispatch) => {
     dispatch(setAppLoading(true));
     try {
         const response = await api.meUpdate(data);
-        console.log(response.data)
         dispatch(updateProfileData(response.data.updatedUser));
     } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
@@ -57,8 +74,11 @@ export const updateProfile = (data: MeUpdateRequestType) => async (dispatch: Dis
 }
 
 
-export type ProfileActionsType = ReturnType<typeof setProfileData>
-    | ReturnType<typeof updateProfileData> | ReturnType<typeof setProfileError>
+export type ProfileActionsType =
+    ReturnType<typeof setProfileData>
+    | ReturnType<typeof updateProfileData>
+    | ReturnType<typeof setProfileError>
+    | ReturnType<typeof setProfileDeleteData>
 
 
 export type ProfileInitialStateType = {

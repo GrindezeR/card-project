@@ -1,14 +1,5 @@
 .error {
-    position: absolute;
-    font-size: 14px;
-    text-align: center;
-    width: 100%;
-    left: 0;
-    bottom: 5px;
-    padding: 5px 0;
-    color: red;
-    font-family: Bahnschrift, sans-serif;
-    font-weight: bold;
+    bottom: 113px;
 }
 
 .avatar {
@@ -20,10 +11,17 @@
     border-radius: 50%;
     height: 200px;
     width: 200px;
+    object-fit: cover;
 }
 
 .info {
     padding-bottom: 10px;
     padding-left: 10px;
     color: #555555;
+}
+
+.btnWrapper {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }

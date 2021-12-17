@@ -12,6 +12,7 @@
 }
 
 .checkboxRemember {
+    user-select: none;
     width: 200px;
     float: left;
     margin-top: 10px;
@@ -39,15 +40,10 @@
     opacity: 1;
 }
 
-.error {
-    position: absolute;
-    font-size: 16px;
-    text-align: center;
-    width: 100%;
-    left: 0;
-    bottom: 5px;
-    padding: 5px 0;
-    color: red;
-    font-family: Bahnschrift, sans-serif;
-    font-weight: bold;
+.errorEmail {
+    top:155px;
+}
+
+.errorPassword {
+    top: 230px;
 }

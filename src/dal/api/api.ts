@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from "axios";
+import {Mail} from "../../common/mail/Mail";
 
 const instance = axios.create({
     // baseURL: 'http://localhost:7542/2.0/',
@@ -9,7 +10,7 @@ const instance = axios.create({
 export const api = {
     login(data: LoginRequestType) {
         return instance.post<LoginRequestType,
-            AxiosResponse<LoginResponseType>>(`auth/login`, {...data})
+            AxiosResponse<LoginResponseType>>(`auth/login`, data)
     },
     register(data: RegisterRequestType) {
         return instance.post<RegisterRequestType,
@@ -32,19 +33,20 @@ export const api = {
             AxiosResponse<MeUpdateResponseType>>(`auth/me`, data)
     },
     forgotPassword(passRecoverMail: string) {
-        return axios.post<ForgotRequestType,
-            AxiosResponse<ForgotResponseType>>(`https://neko-back.herokuapp.com/2.0/auth/forgot`, {
-            withCredentials: true,
+        return instance.post<ForgotRequestType,
+            AxiosResponse<ForgotResponseType>>(`auth/forgot`, {
             email: passRecoverMail,
-            from: "maxim.kornienkou@gmail.com",
-            message: `<div>password recovery link: <a href="http://localhost:3000/#/set-new-password/$token$">
-                                                    Click on this link to create a new password
-                                                    </a></div>`,
+            from: "Cards <best@yandex.by>",
+            message: Mail(),
         })
     },
-    setNewPassword(data: SetNewPasswordRequestType) {
+    setNewPassword(newPassword: string, token: string) {
         return instance.post<SetNewPasswordRequestType,
-            AxiosResponse<SetNewPasswordResponseType>>(`auth/set-new-password`, data)
+            AxiosResponse<SetNewPasswordResponseType>>
+        (`auth/set-new-password`, {
+            password: newPassword,
+            resetPasswordToken: token,
+        })
     },
 }
 
@@ -54,18 +56,18 @@ export type LoginRequestType = {
     rememberMe: boolean
 }
 export type MeUpdateResponseType = {
-    updatedUser: LoginResponseType // весь user {}
+    updatedUser: LoginResponseType
 }
 export type LoginResponseType = {
     _id: string;
     email: string;
     name: string;
     avatar?: string;
-    publicCardPacksCount: number; // количество колод
+    publicCardPacksCount: number;
     created: Date;
     updated: Date;
     isAdmin: boolean;
-    verified: boolean; // подтвердил ли почту
+    verified: boolean;
     rememberMe: boolean;
     error?: string;
 }
@@ -88,7 +90,7 @@ export type MePutRequestType = {
     avatar: string
 }
 export type MePutResponseType = {
-    updatedUser: LoginResponseType // весь user {}
+    updatedUser: LoginResponseType
     error?: string
 }
 export type MeDeleteRequestType = {}

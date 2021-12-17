@@ -43,6 +43,7 @@ export const Registration = () => {
                     <div className={commonStyles.form}>
                         <div>
                             <SuperInputText
+                                onEnter={onSubmit}
                                 className={commonStyles.input}
                                 name={'email'}
                                 type={'text'}
@@ -53,6 +54,7 @@ export const Registration = () => {
                         </div>
                         <div>
                             <SuperInputText
+                                onEnter={onSubmit}
                                 className={commonStyles.input}
                                 name={'password'}
                                 type={'password'}
@@ -63,6 +65,7 @@ export const Registration = () => {
                         </div>
                         <div>
                             <SuperInputText
+                                onEnter={onSubmit}
                                 className={commonStyles.input}
                                 name={'passwordControl'}
                                 type={'password'}
