@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/card-project/static/css/main.fe5b83b2.chunk.css",
-    "main.js": "/card-project/static/js/main.d3afd714.chunk.js",
-    "main.js.map": "/card-project/static/js/main.d3afd714.chunk.js.map",
+    "main.js": "/card-project/static/js/main.e220e856.chunk.js",
+    "main.js.map": "/card-project/static/js/main.e220e856.chunk.js.map",
     "runtime-main.js": "/card-project/static/js/runtime-main.75a98e15.js",
     "runtime-main.js.map": "/card-project/static/js/runtime-main.75a98e15.js.map",
     "static/js/2.fdc16b5d.chunk.js": "/card-project/static/js/2.fdc16b5d.chunk.js",
@@ -21,6 +21,6 @@
     "static/js/runtime-main.75a98e15.js",
     "static/js/2.fdc16b5d.chunk.js",
     "static/css/main.fe5b83b2.chunk.css",
-    "static/js/main.d3afd714.chunk.js"
+    "static/js/main.e220e856.chunk.js"
   ]
 }
