@@ -1,22 +1,22 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import styles from "./PassRecover.module.css";
 import SuperInputText from "../../../common/components/SuperInputText/SuperInputText";
 import SuperButton from "../../../common/components/SuperButton/SuperButton";
-import {errorResponse, InitialStateType, recoveryPass} from "../../../bll/passRecoverReducer";
+import {errorResponse, PassRecoverInitialStateType, recoveryPass} from "../../../bll/passRecoverReducer";
 import {AppStoreType} from "../../../bll/store";
 import {LoadingLine} from "../../../common/components/LoadingLine/LoadingLine";
 import {useNavigate} from "react-router-dom";
 
 export const PassRecover = () => {
 
-    const [recoverPassMail, setRecoverPassMail] = useState<string>("");
-
     const navigate = useNavigate();
 
     const status = useSelector<AppStoreType, boolean>(state => state.app.loading);
-    const recoverPassState = useSelector<AppStoreType, InitialStateType>(state => state.recoverPassPage);
+    const recoverPassState = useSelector<AppStoreType, PassRecoverInitialStateType>(state => state.recoverPassPage);
     const dispatch = useDispatch();
+
+    const [recoverPassMail, setRecoverPassMail] = useState<string>("");
 
     const onChangeEnterMail = (event: ChangeEvent<HTMLInputElement>) => {
         setRecoverPassMail(event.currentTarget.value);
@@ -27,9 +27,11 @@ export const PassRecover = () => {
         dispatch(recoveryPass(recoverPassMail));
     }
 
-    if (recoverPassState.mailSent) {
-        navigate("/check-email");
-    }
+    useEffect(() => {
+        if (recoverPassState.mailSent) {
+            navigate("/check-email");
+        }
+    }, [recoverPassState.mailSent, navigate]);
 
     return (
         <div>

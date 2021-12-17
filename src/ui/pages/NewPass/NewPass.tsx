@@ -1,42 +1,77 @@
-import React, {ChangeEvent, useState} from "react";
-import {useParams} from "react-router-dom";
-import styles from "../PassRecover/PassRecover.module.css";
+import React, {ChangeEvent, useEffect, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
+import styles from "./NewPass.module.css";
 import SuperInputText from "../../../common/components/SuperInputText/SuperInputText";
 import SuperButton from "../../../common/components/SuperButton/SuperButton";
+import {useDispatch, useSelector} from "react-redux";
+import {createNewPassword, errorResponse, NewPassInitialStateType} from "../../../bll/newPassReducer";
+import {AppStoreType} from "../../../bll/store";
+import {LoadingLine} from "../../../common/components/LoadingLine/LoadingLine";
 
 export const NewPass = () => {
 
-    const {token} = useParams()
+    const navigate = useNavigate();
 
-    const [newPassword, setNewPassword] = useState<string>("")
+    const status = useSelector<AppStoreType, boolean>(state => state.app.loading);
+    const setNewPassState = useSelector<AppStoreType, NewPassInitialStateType>(state => state.newPassPage);
+    const dispatch = useDispatch();
+
+    const {token} = useParams();
+
+    const [newPassword, setNewPassword] = useState<string>("");
+    const [confirmPassword, setConfirmPassword] = useState<string>("");
 
     const onChangeNewPassword = (event: ChangeEvent<HTMLInputElement>) => {
-        setNewPassword(event.currentTarget.value)
+        setNewPassword(event.currentTarget.value);
+        dispatch(errorResponse(""));
     }
+
+    const onChangeCheckPassword = (event: ChangeEvent<HTMLInputElement>) => {
+        setConfirmPassword(event.currentTarget.value);
+    }
+
+    const onClickCreatePassword = () => {
+        token && dispatch(createNewPassword(newPassword, token));
+    }
+
+    useEffect(() => {
+        if (setNewPassState.setNewPassword) {
+            navigate("/login");
+        }
+    }, [setNewPassState.setNewPassword, navigate]);
 
     return (
         <div>
-            <section className={styles.passRecoverSection}>
-                <article className={styles.passRecoverArticle}>
-                    <h3>Password Recovery</h3>
-                    <div className={styles.passRecoverForm}>
+            {status && <LoadingLine/>}
+            <section className={styles.newPassSection}>
+                <article className={styles.newPassArticle}>
+                    <h3>Create new password</h3>
+                    <div className={styles.newPassForm}>
                         <div>
                             <SuperInputText
-                                className={styles.email}
-                                name={'email'}
+                                className={styles.password}
+                                name={'new password'}
                                 type={'text'}
                                 value={newPassword}
                                 onChange={onChangeNewPassword}
-                                placeholder={'Email'}
-                                // error={recoverPassState.error}
+                                placeholder={'New password'}
+                                error={setNewPassState.error}
+                            />
+                            <SuperInputText
+                                className={styles.password}
+                                name={'confirm password'}
+                                type={'text'}
+                                value={confirmPassword}
+                                onChange={onChangeCheckPassword}
+                                placeholder={'Confirm password'}
                             />
                         </div>
                         <div>
-                            <SuperButton className={styles.sendInstructions}
-                                         // onClick={onClickSendInstructions}
-                                         // disabled={status === "loading"}
+                            <SuperButton className={styles.createPassword}
+                                         onClick={onClickCreatePassword}
+                                         disabled={newPassword !== confirmPassword || status}
                             >
-                                Send instructions
+                                Create password
                             </SuperButton>
                         </div>
                     </div>

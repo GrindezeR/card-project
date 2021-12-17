@@ -3,15 +3,16 @@ import {Dispatch} from "redux";
 import {api} from "../dal/api/api";
 import {setAppLoading} from "./appReducer";
 
-const initialState: InitialStateType = {
-    mailSent: false,
+const initialState: PassRecoverInitialStateType = {
+    mailSent: "",
     error: "",
 }
 
-export const recoverPassReducer = (state = initialState, action: RecoverPassActionsType): InitialStateType => {
+export const recoverPassReducer = (state = initialState,
+                                   action: RecoverPassActionsType): PassRecoverInitialStateType => {
     switch (action.type) {
         case "PASS_RECOVER/SET-MAIL-SENT":
-            return {...state, mailSent: action.value}
+            return {...state, mailSent: action.info}
         case "PASS_RECOVER/SET-ERROR-RESPONSE":
             return {...state, error: action.error}
         default:
@@ -20,7 +21,7 @@ export const recoverPassReducer = (state = initialState, action: RecoverPassActi
 }
 
 
-export const mailSent = (value: boolean) => ({type: "PASS_RECOVER/SET-MAIL-SENT", value} as const);
+export const mailSent = (info: string) => ({type: "PASS_RECOVER/SET-MAIL-SENT", info} as const);
 export const errorResponse = (error: string) => ({type: "PASS_RECOVER/SET-ERROR-RESPONSE", error} as const);
 
 export const recoveryPass = (passRecoverMail: string) => async (dispatch: Dispatch) => {
@@ -29,7 +30,7 @@ export const recoveryPass = (passRecoverMail: string) => async (dispatch: Dispat
 
     try {
         const response = await api.forgotPassword(passRecoverMail);
-        response && dispatch(mailSent(true));
+        response && dispatch(mailSent(response.data.info));
     } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
             dispatch(errorResponse(error.response.data.error));
@@ -42,7 +43,7 @@ export const recoveryPass = (passRecoverMail: string) => async (dispatch: Dispat
 export type RecoverPassActionsType = ReturnType<typeof mailSent>
     | ReturnType<typeof errorResponse>
 
-export type InitialStateType = {
-    mailSent: boolean,
+export type PassRecoverInitialStateType = {
+    mailSent: string,
     error: string,
 }

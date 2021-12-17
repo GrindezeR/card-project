@@ -32,9 +32,8 @@ export const api = {
             AxiosResponse<MeUpdateResponseType>>(`auth/me`, data)
     },
     forgotPassword(passRecoverMail: string) {
-        return axios.post<ForgotRequestType,
-            AxiosResponse<ForgotResponseType>>(`https://neko-back.herokuapp.com/2.0/auth/forgot`, {
-            withCredentials: true,
+        return instance.post<ForgotRequestType,
+            AxiosResponse<ForgotResponseType>>(`auth/forgot`, {
             email: passRecoverMail,
             from: "maxim.kornienkou@gmail.com",
             message: `<div>password recovery link: <a href="http://localhost:3000/#/set-new-password/$token$">
@@ -42,9 +41,13 @@ export const api = {
                                                     </a></div>`,
         })
     },
-    setNewPassword(data: SetNewPasswordRequestType) {
+    setNewPassword(newPassword: string, token: string) {
         return instance.post<SetNewPasswordRequestType,
-            AxiosResponse<SetNewPasswordResponseType>>(`auth/set-new-password`, data)
+            AxiosResponse<SetNewPasswordResponseType>>
+        (`auth/set-new-password`, {
+            password: newPassword,
+            resetPasswordToken: token,
+        })
     },
 }
 
