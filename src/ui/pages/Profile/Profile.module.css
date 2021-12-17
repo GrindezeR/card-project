@@ -1,101 +1,14 @@
-.profile {
-    display: flex;
-    min-height: calc(100vh - 21px);
-    align-items: center;
-    /*box-sizing: content-box;*/
-}
-
-.profileSection {
-    width: 580px;
-    background-color: #54aed5;
-    margin: 0 auto;
-    padding: 34px 0;
-    font-family: Arial, Helvetica, sans-serif;
-    position: relative;
-}
-
-.profileArticle {
-    background-color: white;
-    width: 365px;
-    /*height: 515px;*/
-    border: 9px solid #56a1be;
-    margin: 0 auto;
-    padding-bottom: 15px;
-}
-
-h3 {
-    height: 29px;
-    background-color: #f5f7f8;
-    text-align: center;
-    border-bottom: 1px solid #CFCFCF;
-    font-size: 0.95rem;
-    color: #555555;
-    margin-top: 0;
-    padding-top: 11px;
-}
-
-.profileForm {
-    padding: 0 20px;
-}
-
-.profileForm div:last-child {
-    text-align: right;
-}
-
-
-.inputs {
-    width: 300px;
-    border: 1px solid #c4c4c4;
-    border-radius: 3px;
-    box-shadow: 0 0 1px 5px #f1f4f7;
-    outline: none;
-    margin: 20px 0 10px 0;
-    padding: 10px 10px;
-    font-size: 0.75rem;
-    color: black;
-}
-
-.submit {
-    width: 70px;
-    height: 30px;
-    background: #dcebf2;
-    background: -webkit-gradient(linear, left top, left bottom, from(#f7fbfd), to(#d2e6ef));
-    background: -moz-linear-gradient(top, #f7fbfd, #d2e6ef);
-    background-image: -o-linear-gradient(top, #f7fbfd, #d2e6ef);
-    border: 1px solid #bbcccf;
-    box-shadow: 0 0 2px 1px #dee4e9;
-    border-radius: 15px;
-    color: #5b7780;
-    cursor: pointer
-}
-
-.submit:hover {
-    box-shadow: 0 0 2px 3px #dee4e9;
-    background: #dcebf2;
-    background: -webkit-gradient(linear, left top, left bottom, from(#f7fbfd), to(#d2e6ef));
-    background: -moz-linear-gradient(top, #f7fbfd, #d2e6ef);
-    background-image: -o-linear-gradient(top, #f7fbfd, #d2e6ef);
-    border: 1px solid #bbcccf;
-    border-radius: 15px;
-    color: #5b7780;
-}
-
-.submit:after {
-    background: inherit;
-}
-
-.inputStyle {
-    color: red;
-    background-color: blue;
-}
-
 .error {
     position: absolute;
-    bottom: 10px;
-    left: 0;
-    color: #ba0505;
+    font-size: 14px;
     text-align: center;
     width: 100%;
+    left: 0;
+    bottom: 5px;
+    padding: 5px 0;
+    color: red;
+    font-family: Bahnschrift, sans-serif;
+    font-weight: bold;
 }
 
 .avatar {
@@ -111,6 +24,6 @@ h3 {
 
 .info {
     padding-bottom: 10px;
-    font-size: 0.95rem;
+    padding-left: 10px;
     color: #555555;
 }

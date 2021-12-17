@@ -3,6 +3,7 @@ import SuperInputText from "../../../common/components/SuperInputText/SuperInput
 import SuperButton from "../../../common/components/SuperButton/SuperButton";
 import {useDispatch, useSelector} from "react-redux";
 import {register, setRegisterError} from "../../../bll/registerReducer";
+import commonStyles from "../../../common/styles/commonStyles.module.css";
 import styles from "./Register.module.css";
 import {AppStoreType} from "../../../bll/store";
 import {Navigate} from "react-router-dom";
@@ -35,14 +36,14 @@ export const Registration = () => {
     }
 
     return (
-        <div className={styles.registration}>
-            <section className={styles.registerSection}>
-                <article className={styles.registerArticle}>
+        <div className={commonStyles.wrapper}>
+            <section className={commonStyles.section}>
+                <article className={commonStyles.article}>
                     <h3>Registration</h3>
-                    <div className={styles.registerForm}>
+                    <div className={commonStyles.form}>
                         <div>
                             <SuperInputText
-                                className={styles.email}
+                                className={commonStyles.input}
                                 name={'email'}
                                 type={'text'}
                                 value={email}
@@ -52,7 +53,7 @@ export const Registration = () => {
                         </div>
                         <div>
                             <SuperInputText
-                                className={styles.password}
+                                className={commonStyles.input}
                                 name={'password'}
                                 type={'password'}
                                 value={password}
@@ -62,7 +63,7 @@ export const Registration = () => {
                         </div>
                         <div>
                             <SuperInputText
-                                className={styles.password}
+                                className={commonStyles.input}
                                 name={'passwordControl'}
                                 type={'password'}
                                 value={passwordCheck}
@@ -72,7 +73,7 @@ export const Registration = () => {
                         </div>
                         <div>
                             <SuperButton
-                                className={styles.submit}
+                              className={[commonStyles.button, styles.button].join(' ')}
                                 onClick={onSubmit}
                                 // disabled={isDisabled}
                             >Sign in</SuperButton>

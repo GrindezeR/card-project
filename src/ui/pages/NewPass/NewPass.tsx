@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useState} from "react";
 import {useParams} from "react-router-dom";
-import styles from "../PassRecover/PassRecover.module.css";
+import commonStyles from "../../../common/styles/commonStyles.module.css";
+import styles from "./NewPass.module.css"
 import SuperInputText from "../../../common/components/SuperInputText/SuperInputText";
 import SuperButton from "../../../common/components/SuperButton/SuperButton";
 
@@ -15,14 +16,14 @@ export const NewPass = () => {
     }
 
     return (
-        <div>
-            <section className={styles.passRecoverSection}>
-                <article className={styles.passRecoverArticle}>
+        <div className={commonStyles.wrapper}>
+            <section className={commonStyles.section}>
+                <article className={commonStyles.article}>
                     <h3>Password Recovery</h3>
-                    <div className={styles.passRecoverForm}>
+                    <div className={commonStyles.form}>
                         <div>
                             <SuperInputText
-                                className={styles.email}
+                                className={commonStyles.input}
                                 name={'email'}
                                 type={'text'}
                                 value={newPassword}
@@ -32,7 +33,7 @@ export const NewPass = () => {
                             />
                         </div>
                         <div>
-                            <SuperButton className={styles.sendInstructions}
+                            <SuperButton className={[commonStyles.button, styles.button].join(' ')}
                                          // onClick={onClickSendInstructions}
                                          // disabled={status === "loading"}
                             >

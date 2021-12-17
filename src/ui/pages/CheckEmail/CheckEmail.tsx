@@ -1,15 +1,15 @@
 import React from "react";
-import styles from "./CheckMail.module.css";
+import commonStyles from "../../../common/styles/commonStyles.module.css";
 
 
 export const CheckEmail = () => {
 
     return (
-        <div>
-            <section className={styles.checkMailSection}>
-                <article className={styles.checkMailArticle}>
+        <div className={commonStyles.wrapper}>
+            <section className={commonStyles.section}>
+                <article className={commonStyles.article}>
                     <h3>Check your email</h3>
-                    <div className={styles.checkMailForm}>
+                    <div className={commonStyles.form}>
                         Check mail ????
                     </div>
                 </article>

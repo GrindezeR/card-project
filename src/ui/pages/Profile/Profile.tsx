@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../bll/store";
 import {setProfileError, updateProfile} from "../../../bll/profileReducer";
+import commonStyles from "../../../common/styles/commonStyles.module.css";
 import styles from "./Profile.module.css";
 import SuperInputText from "../../../common/components/SuperInputText/SuperInputText";
 import SuperButton from "../../../common/components/SuperButton/SuperButton";
@@ -29,31 +30,16 @@ export const Profile = () => {
     }
   }
 
-  // console.log(isLoggedIn)
-
   // if (!isLoggedIn) {
   //   return <Navigate to={'/login'}/>
   // }
 
   return (
-    // <div className={s.wrapper}>
-    //   <img className={s.avatar} src={profileAvatar} alt="avatar"/>
-    //   <div>Name: {profileName}</div>
-    //   <div>Email: {profileEmail}</div>
-    //   <SuperInputText className={s.inputs} placeholder={'Input new name'} value={name} onChangeText={setName}/>
-    //   <SuperInputText className={s.inputs} placeholder={'Input avatar link'} value={avatar}
-    //                   onChangeText={setAvatar}/>
-    //   <SuperButton onClick={onSubmit}>
-    //     Submit
-    //   </SuperButton>
-    //   {error && <div className={sc.error}>{error}</div>}
-    // </div>
-
-  <div className={styles.profile}>
-    <section className={styles.profileSection}>
-      <article className={styles.profileArticle}>
+    <div className={commonStyles.wrapper}>
+    <section className={commonStyles.section}>
+      <article className={commonStyles.article}>
         <h3>Your profile</h3>
-        <div className={styles.profileForm}>
+        <div className={commonStyles.form}>
           <div className={styles.avatar}>
             <img src={profileAvatar} alt="avatar"/>
           </div>
@@ -62,7 +48,7 @@ export const Profile = () => {
           <div>
             <SuperInputText
               type={'text'}
-              className={styles.inputs}
+              className={commonStyles.input}
               placeholder={'Input new name'}
               value={name}
               onChangeText={setName}
@@ -71,7 +57,7 @@ export const Profile = () => {
           <div>
             <SuperInputText
               type={'text'}
-              className={styles.inputs}
+              className={commonStyles.input}
               placeholder={'Input avatar link'}
               value={avatar}
               onChangeText={setAvatar}
@@ -79,9 +65,8 @@ export const Profile = () => {
           </div>
           <div>
             <SuperButton
-              className={styles.submit}
+              className={commonStyles.button}
               onClick={onSubmit}
-              // disabled={isDisabled}
             >Change</SuperButton>
           </div>
         </div>

@@ -1,3 +1,8 @@
 body {
-    background-color: #54aed5;
+    background-image: url("https://232784-754985-raikfcquaxqncofqfm.stackpathdns.com/pub/media/catalog/product/cache/2145573bf2fe07254b36b7b7a3360c71/i/t/item_xxl_24407151_35693585.jpg");
+    background-size: 150px;
+}
+
+body>div {
+    background-color: rgba(84,173,212, .9);
 }
