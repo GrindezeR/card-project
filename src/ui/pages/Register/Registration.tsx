@@ -28,6 +28,7 @@ export const Registration = () => {
             dispatch(setRegisterError('Passwords must match'));
         } else {
             dispatch(register({email, password}));
+            dispatch(setRegisterError(''));
         }
     }
 

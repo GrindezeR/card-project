@@ -27,6 +27,7 @@ export const PassRecover = () => {
             dispatch(errorResponse('Invalid email address'));
         } else {
             dispatch(recoveryPass(recoverPassMail));
+            dispatch(errorResponse(''));
         }
     }
 

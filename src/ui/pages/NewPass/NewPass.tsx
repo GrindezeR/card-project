@@ -36,6 +36,7 @@ export const NewPass = () => {
             dispatch(errorResponse('Invalid password'))
         } else {
             dispatch(createNewPassword(newPassword, token as string));
+            dispatch(errorResponse(''))
         }
     }
 
