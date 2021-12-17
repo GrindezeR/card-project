@@ -8,6 +8,7 @@ import SuperInputText from "../../../common/components/SuperInputText/SuperInput
 import SuperButton from "../../../common/components/SuperButton/SuperButton";
 import {Navigate} from "react-router-dom";
 import {logOut} from "../../../bll/loginReducer";
+import noAvatar from '../../../common/images/noAvatar.png';
 
 export const Profile = () => {
     const dispatch = useDispatch();
@@ -52,7 +53,7 @@ export const Profile = () => {
                     <h3>Your profile</h3>
                     <div className={commonStyles.form}>
                         <div className={styles.avatar}>
-                            <img src={profileAvatar} alt="avatar"/>
+                            <img src={profileAvatar ? profileAvatar : noAvatar} alt="avatar"/>
                         </div>
                         <div className={styles.info}>Name: {profileName}</div>
                         <div className={styles.info}>Email: {profileEmail}</div>
