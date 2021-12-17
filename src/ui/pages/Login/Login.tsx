@@ -32,6 +32,8 @@ export const Login = () => {
             setPasswordError('Invalid password');
         } else {
             dispatch(logIn({email, password, rememberMe}));
+            setEmailError('');
+            setPasswordError('');
         }
     }
 
