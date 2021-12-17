@@ -38,7 +38,7 @@ export const createNewPassword = (newPassword: string, token: string) => async (
 
     try {
         const response = await api.setNewPassword(newPassword, token);
-        response && dispatch(setNewPass(response.data.info));
+        dispatch(setNewPass(response.data.info));
     }
     catch (error) {
         if (axios.isAxiosError(error) && error.response) {

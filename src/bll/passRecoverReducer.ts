@@ -30,7 +30,7 @@ export const recoveryPass = (passRecoverMail: string) => async (dispatch: Dispat
 
     try {
         const response = await api.forgotPassword(passRecoverMail);
-        response && dispatch(mailSent(response.data.info));
+        dispatch(mailSent(response.data.info));
     } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
             dispatch(errorResponse(error.response.data.error));
