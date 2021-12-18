@@ -12,6 +12,7 @@ import {AppStoreType} from "../../bll/store";
 import {LoadingLine} from "../../common/components/LoadingLine/LoadingLine";
 import {CheckEmail} from "../pages/CheckEmail/CheckEmail";
 import {initialize} from "../../bll/appReducer";
+import {Pack} from "../pages/Pack/Pack";
 
 function App() {
     const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
                     <Route path={'check-email'} element={<CheckEmail/>}/>
                     <Route path={'set-new-password/:token'} element={<NewPass/>}/>
                     <Route path={'pass_recovery'} element={<PassRecover/>}/>
+                    <Route path={'pack'} element={<Pack/>}/>
                     <Route path={'404'} element={<Error404/>}/>
                     <Route path={'*'} element={<Navigate to={'404'}/>}/>
                 </Routes>
