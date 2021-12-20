@@ -1,5 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 import {Mail} from "../../common/mail/Mail";
+import {PackType} from "../../bll/packReducer";
 
 const instance = axios.create({
   // baseURL: 'http://localhost:7542/2.0/',
@@ -49,8 +50,14 @@ export const api = {
     })
   },
 
-  getPack() {
-    return instance.get<AxiosResponse<getPackResponseType>>(`cards/pack`)
+  getPack(page: number, pageCount: number) {
+    // return instance.get<getPackResponseType>(`cards/pack?pageSize=${pageSize}`, {
+    return instance.get<null, AxiosResponse<getPackResponseType>>(`cards/pack`, {
+      params: {
+        page: page,
+        pageCount: pageCount
+      }
+    })
   },
   setPack(data: setPackRequestType) {
     return instance.post<setPackRequestType,
@@ -82,24 +89,25 @@ export const api = {
       AxiosResponse<deleteCardResponseType>>(`cards/card`, data)
   }
 }
-// export type getPackRequestType = {
-//     packName?: string
-//     min?: string
-//     max?: string
-//     sortPacks?: string
-//     page?: string
-//     pageCount?: string
-//     user_id?: string
-// }
+
+type queryParams = {
+  page?: number,
+  pageCount?: number,
+  user_id?: number,
+  packName?: string,
+  min?: number,
+  max?: number,
+  sortPacks?: string
+}
 export type getPackResponseType = {
   cardPacks: Array<PackType>
+  cardPacksTotalCount: number
+  maxCardsCount: number
+  minCardsCount: number
   page: number
   pageCount: number
-  cardPacksTotalCount: number
-  minCardsCount: number
-  maxCardsCount: number
-  token: string
-  tokenDeathTime: number
+  token: any
+  tokenDeathTime: any
 }
 export type setPackRequestType = {
   cardsPack: PackType
@@ -120,24 +128,6 @@ export type deletePackResponseType = {
   deletedCardsPack: {}
 }
 
-type PackType = {
-  _id: string
-  user_id: string
-  user_name: string
-  private: boolean
-  name: string
-  path: string
-  grade: number
-  shots: number
-  cardsCount: number
-  type: string
-  rating: number
-  created: Date
-  updated: Date
-  more_id: string
-  __v: number
-}
-
 // export type getCardRequestType = {
 //   ?cardAnswer=english // не обязательно
 //   &cardQuestion=english // не обязательно
@@ -149,20 +139,13 @@ type PackType = {
 // &pageCount=7 // не обязательно
 // }
 
-export type getCardResponseType = {
-}
-export type setCardRequestType = {
-}
-export type setCardResponseType = {
-}
-export type updateCardRequestType = {
-}
-export type updateCardResponseType = {
-}
-export type deleteCardRequestType = {
-}
-export type deleteCardResponseType = {
-}
+export type getCardResponseType = {}
+export type setCardRequestType = {}
+export type setCardResponseType = {}
+export type updateCardRequestType = {}
+export type updateCardResponseType = {}
+export type deleteCardRequestType = {}
+export type deleteCardResponseType = {}
 
 
 export type LoginRequestType = {

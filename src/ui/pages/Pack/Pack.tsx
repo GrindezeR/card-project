@@ -1,63 +1,102 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import commonStyles from "../../../common/styles/commonStyles.module.css";
 import styles from "./Pack.module.css"
+import SuperDoubleRange from "../../../common/components/SuperDoubleRange/SuperDoubleRange";
+import {getPackApi, InitialStatePackPageType} from "../../../bll/packReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStoreType} from "../../../bll/store";
+import {Paginator} from "../../../common/components/Paginator/Paginator";
 
 export const Pack = () => {
+  const {
+    cardPacks,
+    cardPacksTotalCount,
+    maxCardsCount,
+    minCardsCount,
+    page,
+    pageCount,
+    // token,
+    // tokenDeathTime,
+  } = useSelector<AppStoreType, InitialStatePackPageType>(state => state.packPage)
+  const dispatch = useDispatch()
 
-  const initState = [
-    {_id: "1", productName: "car", price: 2000000, productType: 'cars'},
-    {_id: "2", productName: "book", price: 570, productType: 'books'},
-    {_id: "3", productName: "phone", price: 20000, productType: 'phones'},
-    {_id: "4", productName: "pen", price: 10, productType: 'pens'},
-    {_id: "5", productName: "notebook", price: 40000, productType: 'notebooks'}
-  ]
+  const [value1, setValue1] = useState(0)
+  const [value2, setValue2] = useState(100)
 
-  const [products, setProducts] = useState(initState);
-
-  console.log('before', products)
-  const sortPriceUp = () => {
-    const sortedProducts = products.sort((a, b) => a.price - b.price)
-    setProducts([...sortedProducts])
-    console.log('inner up', products)
+  const onChangeDoubleRanger = (value: [number, number]) => {
+    setValue1(value[0])
+    setValue2(value[1])
   }
 
-  const sortPriceDown = () => {
-    const sortedProducts = products.sort((a, b) => b.price - a.price)
-    setProducts([...sortedProducts])
-    console.log('inner down', products)
+  const onChangedPage = (numberCurrentPage: number) => {
+    dispatch(getPackApi(numberCurrentPage, 8))
   }
-  console.log('after', products)
 
-  // const sortedByName = products.sort((a, b) => a.productName > b.productName ? 1 : -1)
-  // const sortedByPrice = products.sort((a, b) => a.price - b.price)
+  useEffect(() => {
+    dispatch(getPackApi(1, 8))
+  }, [dispatch]);
+
 
   return (
     <div className={commonStyles.wrapper}>
-      <section className={commonStyles.section}>
-        <table width="100%" cellPadding="5">
-          <caption>Table</caption>
-          <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price
-              <span>
-                <button onClick={sortPriceUp}>up</button>
-                <button onClick={sortPriceDown}>down</button>
-              </span>
-            </th>
-            <th>Type</th>
-          </tr>
-          </thead>
-          <tbody>
-          {products.map(pr => (
-            <tr key={pr._id}>
-              <td>{pr.productName}</td>
-              <td>{pr.price}</td>
-              <td>{pr.productType}</td>
+      <section className={`${commonStyles.section} ${styles.section}`}>
+        <article className={`${commonStyles.article} ${styles.article}`}>
+          <div className={styles.rangeWrapper}>
+            <span style={{color: value1 === 0 ? 'red' : ''}}>{value1}</span>
+            <SuperDoubleRange
+              value={[value1, value2]}
+              onChangeRange={onChangeDoubleRanger}
+            />
+            <span style={{color: value2 === 100 ? 'red' : ''}}>{value2}</span>
+          </div>
+          <table className={commonStyles.table} width="100%" cellPadding="5">
+            <caption>Table</caption>
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Cards Count</th>
+              <th>Updated
+                {/*<span>*/}
+                {/*  <button onClick={()=>{}}>up</button>*/}
+                {/*  <button onClick={()=>{}}>down</button>*/}
+                {/*</span>*/}
+              </th>
+              <th>
+                <button onClick={() => {
+                }}>add
+                </button>
+              </th>
             </tr>
-          ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+            {cardPacks.map(p => (
+              <tr key={p._id}>
+                <td>{p.name}</td>
+                <td>{p.cardsCount}</td>
+                <td>{p.updated}</td>
+                <td>
+                  <span>
+                    <button onClick={() => {
+                    }}>delete</button>
+                    <button onClick={() => {
+                    }}>update</button>
+                  </span>
+                </td>
+              </tr>
+            ))}
+            </tbody>
+          </table>
+          <Paginator
+            // cardPacksTotalCount={100}
+            // page={6}
+            // pageCount={7}
+            currentPage={3}
+            pageSize={pageCount}//количество элементов на 1 странице
+            totalItemsCount={cardPacksTotalCount}//общее количество
+            portionSize={5} //количество видимых кнопок
+            onChangedPage={onChangedPage}
+          />
+        </article>
       </section>
     </div>
   );

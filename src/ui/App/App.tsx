@@ -13,6 +13,7 @@ import {LoadingLine} from "../../common/components/LoadingLine/LoadingLine";
 import {CheckEmail} from "../pages/CheckEmail/CheckEmail";
 import {initialize} from "../../bll/appReducer";
 import {Pack} from "../pages/Pack/Pack";
+import {getPackApi} from "../../bll/packReducer";
 
 function App() {
     const dispatch = useDispatch();
@@ -21,6 +22,8 @@ function App() {
 
     useEffect(() => {
         dispatch(initialize());
+        // dispatch(getPackApi())
+
     }, [dispatch])
 
     if (!initialized) {

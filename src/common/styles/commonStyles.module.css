@@ -95,4 +95,23 @@
     opacity: .5;
 }
 
+.table {
+    margin-top: 50px;
+}
+
+.table th {
+    padding: 20px 0;
+    background-color: #56a1be;
+    color: white;
+    font-size: 18px;
+}
+
+.table tr:nth-child(even) {
+    background-color: #d7ecf6;
+}
+
+.table tr:nth-child(odd) {
+    background-color: #f2f8fc;
+}
+
 

@@ -1,0 +1,24 @@
+.paginator {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.numberPage {
+    border: 1px solid grey;
+    border-radius: 3px;
+    margin: 0 1px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    padding: 2px 5px;
+}
+
+.numberPage:hover,
+.selected {
+    background-color: #e5e5e5;
+}
+
+.arrowButton {
+    padding: 2px 1px;
+    cursor: pointer;
+}

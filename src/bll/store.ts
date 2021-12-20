@@ -6,6 +6,7 @@ import {profileReducer} from "./profileReducer";
 import {registerReducer} from "./registerReducer";
 import {appReducer} from "./appReducer";
 import thunkMiddleware from 'redux-thunk'
+import {packReducer} from "./packReducer";
 
 
 const rootReducer = combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     recoverPassPage: recoverPassReducer,
     profilePage: profileReducer,
     registerPage: registerReducer,
+    packPage: packReducer,
 })
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 export type AppStoreType = ReturnType<typeof rootReducer>;
