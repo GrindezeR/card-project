@@ -25,6 +25,7 @@ export const Packs = () => {
         page,
         pageCount,
         error,
+        user_id,
     } = useSelector<AppStoreType, InitialStatePackPageType>(state => state.packPage)
     const isLoggedIn = useSelector<AppStoreType, boolean>(state => state.loginPage.isLoggedIn);
     const userId = useSelector<AppStoreType, string>(state => state.profilePage._id);
@@ -156,7 +157,7 @@ export const Packs = () => {
                             <th>
                                 <div className={styles.myPacksButtonsWrapper}>
                                     <label>
-                                        <input type={'checkbox'} onChange={checkMyHandler}/>
+                                        <input type={'checkbox'} checked={user_id !== ''} onChange={checkMyHandler}/>
                                         My packs
                                     </label>
                                     <SuperButton
