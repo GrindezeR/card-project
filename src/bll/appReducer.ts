@@ -30,7 +30,7 @@ export const setAppInitialize = () => ({type: 'APP/SET-INITIALIZE'} as const)
 export const initialize = () => async (dispatch: Dispatch) => {
     dispatch(setAppLoading(true));
     try {
-        const response = await api.mePost({})
+        const response = await api.mePost()
         dispatch(setProfileData(response.data));
         dispatch(setLoggedIn(true));
     } catch {

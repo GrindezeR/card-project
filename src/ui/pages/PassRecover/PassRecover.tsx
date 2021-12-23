@@ -6,7 +6,7 @@ import SuperInputText from "../../../common/components/SuperInputText/SuperInput
 import SuperButton from "../../../common/components/SuperButton/SuperButton";
 import {errorResponse, PassRecoverInitialStateType, recoveryPass} from "../../../bll/passRecoverReducer";
 import {AppStoreType} from "../../../bll/store";
-import {Navigate} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 
 export const PassRecover = () => {
     const status = useSelector<AppStoreType, boolean>(state => state.app.loading);
@@ -54,7 +54,12 @@ export const PassRecover = () => {
                                 error={recoverPassState.error}
                             />
                         </div>
-                        <div>
+                        <div className={styles.btnWrapper}>
+                            <Link to={'/login'}>
+                                <SuperButton className={commonStyles.button}>
+                                    Back
+                                </SuperButton>
+                            </Link>
                             <SuperButton
                                 className={`${commonStyles.button} ${styles.button} ${status ? commonStyles.disabled : ''}`}
                                 onClick={onSubmit}

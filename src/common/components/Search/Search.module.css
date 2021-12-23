@@ -1,0 +1,9 @@
+.searchWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search {
+    margin: 0;
+}

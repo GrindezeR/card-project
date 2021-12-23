@@ -1,7 +1,5 @@
 .button, .disabled {
-    width: 90px;
-    height: 40px;
-    margin-top: 35px;
+    width: 130px;
 }
 
 .error {
@@ -14,4 +12,16 @@
     padding: 5px 0;
     color: red;
     font-family: Bahnschrift, sans-serif;
+}
+
+.btnWrapper {
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.btnWrapper a {
+    text-decoration: none;
+    color: #5b7780;
 }

@@ -7,7 +7,7 @@ import error from './404.png';
 function Error404() {
     return (
         <div className={commonStyles.wrapper}>
-          <div className={[commonStyles.section, s.section].join(' ')}>
+          <div className={`${commonStyles.section} ${s.section}`}>
             <div className={s.error}>
               <span>4</span>
               <img className={s.image} src={error} alt="404" width={'200px'}/>
@@ -18,7 +18,6 @@ function Error404() {
             </p>
             <NavLink to={'/'} className={s.home}>Return Home</NavLink>
           </div>
-
         </div>
     )
 }

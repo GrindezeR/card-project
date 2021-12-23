@@ -12,8 +12,8 @@ import {AppStoreType} from "../../bll/store";
 import {LoadingLine} from "../../common/components/LoadingLine/LoadingLine";
 import {CheckEmail} from "../pages/CheckEmail/CheckEmail";
 import {initialize} from "../../bll/appReducer";
-import {Pack} from "../pages/Pack/Pack";
-import {getPackApi} from "../../bll/packReducer";
+import {Packs} from "../pages/Pack/Packs";
+import {Cards} from "../pages/Card/Cards";
 
 function App() {
     const dispatch = useDispatch();
@@ -22,8 +22,6 @@ function App() {
 
     useEffect(() => {
         dispatch(initialize());
-        // dispatch(getPackApi())
-
     }, [dispatch])
 
     if (!initialized) {
@@ -41,8 +39,9 @@ function App() {
                     <Route path={'registration'} element={<Registration/>}/>
                     <Route path={'check-email'} element={<CheckEmail/>}/>
                     <Route path={'set-new-password/:token'} element={<NewPass/>}/>
+                    <Route path={'cards/:pack_id'} element={<Cards/>}/>
+                    <Route path={'packs'} element={<Packs/>}/>
                     <Route path={'pass_recovery'} element={<PassRecover/>}/>
-                    <Route path={'pack'} element={<Pack/>}/>
                     <Route path={'404'} element={<Error404/>}/>
                     <Route path={'*'} element={<Navigate to={'404'}/>}/>
                 </Routes>

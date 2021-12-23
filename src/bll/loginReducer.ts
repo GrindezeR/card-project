@@ -44,7 +44,7 @@ export const logIn = (data: LoginRequestType) => async (dispatch: Dispatch) => {
 export const logOut = () => async (dispatch: Dispatch) => {
     dispatch(setAppLoading(true));
     try {
-        await api.meDelete({})
+        await api.meDelete();
         dispatch(setProfileDeleteData());
         dispatch(setLoggedIn(false));
     } catch (error) {

@@ -5,8 +5,7 @@
 }
 
 .section {
-    width: 580px;
-    /*background-color: #54aed5;*/
+    /*width: 580px;*/
     margin: 0 auto;
     padding: 34px 0;
     font-family: Arial, Helvetica, sans-serif;
@@ -15,7 +14,6 @@
 
 .article {
     background-color: white;
-    width: 365px;
     border: 9px solid #56a1be;
     margin: 0 auto;
     padding-bottom: 15px;
@@ -25,7 +23,7 @@
     margin: 25px 10px;
 }
 
-.form>div:last-child {
+.form > div:last-child {
     text-align: right;
 }
 
@@ -52,7 +50,7 @@
 }
 
 .button {
-    width: 70px;
+    min-width: 70px;
     height: 30px;
     background: #dcebf2;
     background: -webkit-gradient(linear, left top, left bottom, from(#f7fbfd), to(#d2e6ef));
@@ -96,14 +94,20 @@
 }
 
 .table {
-    margin-top: 50px;
+    margin: 20px auto;
 }
 
 .table th {
-    padding: 20px 0;
+    padding: 10px 0;
     background-color: #56a1be;
     color: white;
     font-size: 18px;
+}
+
+.table tr, td {
+    max-width: 200px;
+    width: 200px;
+    word-wrap: break-word;
 }
 
 .table tr:nth-child(even) {

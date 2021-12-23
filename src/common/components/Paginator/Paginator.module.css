@@ -1,24 +1,30 @@
-.paginator {
-    text-align: right;
-    margin-top: 10px;
+.pagesWrapper {
+  display: flex;
+  margin: 10px 0;
+  gap: 10px;
+  justify-content: center;
+  font-family: Bahnschrift, sans-serif;
+  font-size: 22px;
+  font-weight: bold;
+  color: #94c5de;
 }
 
-.numberPage {
-    border: 1px solid grey;
-    border-radius: 3px;
-    margin: 0 1px;
-    cursor: pointer;
-    font-size: 16px;
-    text-align: center;
-    padding: 2px 5px;
+.pageList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.numberPage:hover,
-.selected {
-    background-color: #e5e5e5;
+.currentPage {
+  color: #0b678a;
+  font-size: 28px;
 }
 
-.arrowButton {
-    padding: 2px 1px;
-    cursor: pointer;
+.page {
+  cursor: pointer;
+  user-select: none;
+}
+
+.page:hover {
+  color: #0b678a;
 }

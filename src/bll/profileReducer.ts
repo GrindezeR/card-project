@@ -1,4 +1,4 @@
-import {api, LoginResponseType, MeUpdateRequestType} from "../dal/api/api";
+import {api, UserResponseType, MePutRequestType} from "../dal/api/api";
 import {Dispatch} from "redux";
 import axios from "axios";
 import {setAppLoading} from "./appReducer";
@@ -26,20 +26,7 @@ export const profileReducer = (state = initialState, action: ProfileActionsType)
         case "PROFILE/SET-PROFILE-ERROR":
             return {...state, error: action.error}
         case "PROFILE/SET-PROFILE-DELETE-DATA":
-            return {
-                _id: '',
-                email: '',
-                name: '',
-                avatar: '',
-                publicCardPacksCount: 0,
-                isAdmin: false,
-                verified: false,
-                rememberMe: false,
-                error: '',
-                token: '',
-                created: null,
-                updated: null,
-            };
+            return initialState;
         default:
             return state;
     }
@@ -48,7 +35,7 @@ export const profileReducer = (state = initialState, action: ProfileActionsType)
 export const setProfileData = (data: ProfileInitialStateType) => {
     return {type: 'PROFILE/SET-PROFILE-DATA', data} as const
 }
-export const updateProfileData = (data: LoginResponseType) => {
+export const updateProfileData = (data: UserResponseType) => {
     return {type: 'PROFILE/UPDATE-PROFILE-DATA', data} as const
 }
 export const setProfileError = (error: string) => {
@@ -59,10 +46,10 @@ export const setProfileDeleteData = () => {
 }
 
 
-export const updateProfile = (data: MeUpdateRequestType) => async (dispatch: Dispatch) => {
+export const updateProfile = (data: MePutRequestType) => async (dispatch: Dispatch) => {
     dispatch(setAppLoading(true));
     try {
-        const response = await api.meUpdate(data);
+        const response = await api.mePut(data);
         dispatch(updateProfileData(response.data.updatedUser));
     } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
@@ -85,7 +72,7 @@ export type ProfileInitialStateType = {
     _id: string
     email: string
     name: string
-    avatar?: string
+    avatar: string
     publicCardPacksCount: number
     token?: string
     created: Date | null
@@ -93,5 +80,5 @@ export type ProfileInitialStateType = {
     isAdmin: boolean
     verified: boolean
     rememberMe: boolean
-    error?: string
+    error: string
 }

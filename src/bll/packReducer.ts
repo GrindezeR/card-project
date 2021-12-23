@@ -1,80 +1,211 @@
-import {api, getPackResponseType} from "../dal/api/api";
+import {setAppLoading} from "./appReducer";
+import axios from "axios";
+import {api, GetPacksRequestType} from "../dal/api/api";
+import {AppStoreType, AppThunk} from "./store";
 import {Dispatch} from "redux";
 
 const initialState: InitialStatePackPageType = {
-  cardPacks: [],
-  cardPacksTotalCount: 1,
-  maxCardsCount: 1,
-  minCardsCount: 1,
-  page: 1,
-  pageCount: 1,
-  // token: '',
-  // tokenDeathTime: 0,
+    cardPacks: [],
+    cardPacksTotalCount: 0,
+    maxCardsCount: 0,
+    minCardsCount: 0,
+    page: 1,
+    pageCount: 10,
+    error: '',
+    user_id: '',
+    token: '',
 }
 export const packReducer = (state = initialState, action: PackActionsType): InitialStatePackPageType => {
-  switch (action.type) {
-    case "PACK/GET_PACK":
-      return {...state = action.data}
-    case "PACK/SET_PACK":
-      return {...state}
-    case "PACK/UPDATE_PACK":
-      return {...state}
-    case "PACK/DELETE_PACK":
-      return {...state}
-    default:
-      return state;
-  }
+    switch (action.type) {
+        case "PACK/SET-PACKS-DATA":
+            return {...state, ...action.data}
+        case "PACK/CLEAR-PACKS":
+            return initialState;
+        case "PACK/SET-ERROR":
+            return {...state, error: action.error}
+        case "PACK/SET-SORT":
+            if (action.sortType === 'name') {
+                if (action.sort === 'up') {
+                    return {
+                        ...state, cardPacks: [...state.cardPacks.sort((a, b) => {
+                            let nameOne = a.name.toLocaleLowerCase();
+                            let nameTwo = b.name.toLocaleLowerCase();
+                            if (nameOne < nameTwo) return -1;
+                            else if (nameOne > nameTwo) return 1;
+                            else return 0
+                        })]
+                    }
+                } else {
+                    return {
+                        ...state, cardPacks: [...state.cardPacks.sort((a, b) => {
+                            let nameOne = a.name.toLocaleLowerCase();
+                            let nameTwo = b.name.toLocaleLowerCase();
+                            if (nameOne > nameTwo) return -1;
+                            else if (nameOne < nameTwo) return 1;
+                            else return 0;
+                        })]
+                    }
+                }
+            } else if (action.sortType === 'cardsCount') {
+                if (action.sort === 'up') {
+                    return {
+                        ...state, cardPacks: [...state.cardPacks.sort((a, b) => {
+                            let nameOne = a.cardsCount;
+                            let nameTwo = b.cardsCount;
+                            if (nameOne > nameTwo) return -1;
+                            else if (nameOne < nameTwo) return 1;
+                            else return 0;
+                        })]
+                    }
+                } else {
+                    return {
+                        ...state, cardPacks: [...state.cardPacks.sort((a, b) => {
+                            let nameOne = a.cardsCount;
+                            let nameTwo = b.cardsCount;
+                            if (nameOne < nameTwo) return -1;
+                            else if (nameOne > nameTwo) return 1;
+                            else return 0
+                        })]
+
+                    }
+                }
+            } else if (action.sortType === 'updated') {
+                if (action.sort === 'up') {
+                    return {
+                        ...state, cardPacks: [...state.cardPacks.sort((a, b) => {
+                            let nameOne = a.updated;
+                            let nameTwo = b.updated;
+                            if (nameOne > nameTwo) return -1;
+                            else if (nameOne < nameTwo) return 1;
+                            else return 0;
+                        })]
+                    }
+                } else {
+                    return {
+                        ...state, cardPacks: [...state.cardPacks.sort((a, b) => {
+                            let nameOne = a.updated;
+                            let nameTwo = b.updated;
+                            if (nameOne < nameTwo) return -1;
+                            else if (nameOne > nameTwo) return 1;
+                            else return 0
+                        })]
+
+                    }
+                }
+            }
+            return state;
+        default:
+            return state;
+    }
 }
 
-const getPack = (data: getPackResponseType) =>
-  ({type: 'PACK/GET_PACK', data} as const)
-const setPack = () =>
-  ({type: 'PACK/SET_PACK'} as const)
-const updatePack = () =>
-  ({type: 'PACK/UPDATE_PACK'} as const)
-const deletePack = () =>
-  ({type: 'PACK/DELETE_PACK'} as const)
+export const setPacksData = (data: GetPacksRequestType) => ({type: 'PACK/SET-PACKS-DATA', data} as const)
+export const clearPacksData = () => ({type: 'PACK/CLEAR-PACKS'} as const)
+export const setPacksError = (error: string) => ({type: 'PACK/SET-ERROR', error} as const)
+export const setPacksSortData = (sort: 'up' | 'down', sortType: 'name' | 'cardsCount' | 'updated') =>
+    ({type: 'PACK/SET-SORT', sort, sortType} as const)
 
 //thunks
-export const getPackApi = (page: number, pageCount: number) => async (dispatch: Dispatch, getState: any) => {
-  // const pageSize = getState().packPage().page
-  try {
-    const response = await api.getPack(page, pageCount)
-    dispatch(getPack(response.data))
-    console.log(response.data)
-  } catch (e) {
+export const getPacks = (searchParams?: string) =>
+    async (dispatch: Dispatch, getState: () => AppStoreType) => {
+        dispatch(setAppLoading(true));
+        dispatch(setPacksError(''));
+        try {
+            const response = await api.getPacks({
+                page: getState().packPage.page,
+                user_id: getState().packPage.user_id,
+                pageCount: getState().packPage.pageCount,
+                packName: searchParams && searchParams,
+            })
+            dispatch(setPacksData(response.data))
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                dispatch(setPacksError(error.response.data.error));
+            }
+        } finally {
+            dispatch(setAppLoading(false));
+        }
+    }
 
-  }
-}
+export const addPack = (name: string): AppThunk =>
+    async (dispatch) => {
+        dispatch(setAppLoading(true));
+        try {
+            await api.addPack(name);
+            dispatch(getPacks());
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                dispatch(setPacksError(error.response.data.error));
+            } else if (axios.isAxiosError(error)) {
+                dispatch(setPacksError(error.message));
+            }
+        } finally {
+            dispatch(setAppLoading(false));
+        }
+    }
+
+export const deletePack = (packId: string): AppThunk =>
+    async (dispatch) => {
+        dispatch(setAppLoading(true));
+        try {
+            await api.deletePack(packId);
+            dispatch(getPacks());
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                dispatch(setPacksError(error.response.data.error));
+            } else if (axios.isAxiosError(error)) {
+                dispatch(setPacksError(error.message));
+            }
+        } finally {
+            dispatch(setAppLoading(false));
+        }
+    }
+export const updatePack = (packId: string, name: string): AppThunk =>
+    async (dispatch, getState: () => AppStoreType) => {
+        dispatch(setAppLoading(true));
+        try {
+            await api.updatePack(packId, name);
+            dispatch(getPacks());
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                dispatch(setPacksError(error.response.data.error));
+            } else if (axios.isAxiosError(error)) {
+                dispatch(setPacksError(error.message));
+            }
+        } finally {
+            dispatch(setAppLoading(false));
+        }
+    }
 
 export type InitialStatePackPageType = {
-  cardPacks: Array<PackType>
-  cardPacksTotalCount: number
-  maxCardsCount: number
-  minCardsCount: number
-  page: number
-  pageCount: number
-  // token: string
-  // tokenDeathTime: number
+    cardPacks: PackType[]
+    cardPacksTotalCount: number
+    maxCardsCount: number
+    minCardsCount: number
+    page: number
+    pageCount: number
+    error: string
+    user_id: string
+    token: string
 }
-
 export type PackType = {
-  _id: string
-  user_id: string
-  user_name: string
-  private: boolean
-  name: string
-  path: string
-  grade: number
-  shots: number
-  cardsCount: number
-  type: string
-  rating: number
-  created: Date
-  updated: Date
-  more_id: string
-  __v: number
+    _id: string
+    user_id: string
+    user_name: string
+    private: boolean
+    name: string
+    path: string
+    grade: number
+    shots: number
+    cardsCount: number
+    type: string
+    rating: number
+    created: Date
+    updated: Date
+    more_id: string
+    __v: number
 }
-
-type PackActionsType = ReturnType<typeof getPack> | ReturnType<typeof setPack>
-  | ReturnType<typeof updatePack> | ReturnType<typeof deletePack>
+type PackActionsType = ReturnType<typeof setPacksData>
+    | ReturnType<typeof clearPacksData>
+    | ReturnType<typeof setPacksError>
+    | ReturnType<typeof setPacksSortData>

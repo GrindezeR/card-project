@@ -76,13 +76,16 @@ export const Registration = () => {
                             />
                         </div>
                         <div className={styles.btnWrapper}>
-                            <SuperButton className={commonStyles.button}>
-                                <Link to={'/login'}>Log in</Link>
-                            </SuperButton>
+                            <Link to={'/login'}>
+                                <SuperButton className={commonStyles.button}>
+                                    Back
+                                </SuperButton>
+                            </Link>
                             <SuperButton
                                 className={commonStyles.button}
-                                onClick={onSubmit}
-                            >Sign in</SuperButton>
+                                onClick={onSubmit}>
+                                Registration
+                            </SuperButton>
                         </div>
                     </div>
                 </article>
