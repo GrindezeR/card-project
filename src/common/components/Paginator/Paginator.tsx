@@ -1,5 +1,7 @@
 import React from "react";
 import s from './Paginator.module.css';
+import {useSelector} from "react-redux";
+import {AppStoreType} from "../../../bll/store";
 
 type PropsType = {
     totalCount: number
@@ -8,6 +10,7 @@ type PropsType = {
     onChangedPage: (n: number) => void
 }
 export const Paginator = ({totalCount, pageSize, currentPage, onChangedPage}: PropsType) => {
+    const isLoading = useSelector<AppStoreType, boolean>(state => state.app.loading);
     const pageCounts = Math.ceil(totalCount / pageSize);
     const pages = [];
     //start
@@ -34,11 +37,13 @@ export const Paginator = ({totalCount, pageSize, currentPage, onChangedPage}: Pr
     }
 
     const pageList = pages.map(n => {
-        const onClickGetUsersByPage = () => onChangedPage(n);
+        const onClickGetByPage = () => !isLoading && onChangedPage(n);
 
         return (
-            <span key={n} className={currentPage === n ? s.currentPage : s.page}
-                  onClick={onClickGetUsersByPage}>{n}
+            <span key={n}
+                  className={currentPage === n ? s.currentPage : s.page}
+                  onClick={onClickGetByPage}>
+                {n}
             </span>
         );
     })

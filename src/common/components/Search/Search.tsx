@@ -45,7 +45,7 @@ export const Search = ({searchFunction}: PropsType) => {
                 disabled={isLoading}
                 className={`${commonStyles.button} ${isLoading && commonStyles.disabled}`}
                 onClick={clearSearch}>
-                Cancel
+                Clear
             </SuperButton>
         </div>
     );

@@ -2,6 +2,7 @@
     width: 90%;
     min-height: 90vh;
 }
+
 .article {
     position: relative;
     padding: 20px;
@@ -32,7 +33,15 @@
 }
 
 .labelSelectPageCounts {
+    color: #0b678a;
+    font-weight: bold;
+    margin-bottom: 5px;
     margin-right: 10px;
+}
+
+.packNumberWrapper {
+    display: flex;
+    align-items: flex-end;
 }
 
 .select {
@@ -46,4 +55,9 @@
 
 .select option {
     text-align: center;
+}
+
+.refreshBtn {
+    width: 120px;
+    margin: 0 10px;
 }

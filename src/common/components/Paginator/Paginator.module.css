@@ -18,6 +18,7 @@
 .currentPage {
   color: #0b678a;
   font-size: 28px;
+  user-select: none;
 }
 
 .page {

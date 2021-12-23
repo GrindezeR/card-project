@@ -37,13 +37,14 @@ export const Packs = () => {
         dispatch(getPacks());
     }, [dispatch])
 
+
     const onChangedPage = (currentPage: number) => {
         dispatch(setPacksError(''));
         dispatch(setPacksData({page: currentPage}));
         dispatch(getPacks());
     }
     const addPackHandler = () => {
-        dispatch(addPack(`SUPER PACK ${random}`));
+        dispatch(addPack(`SUPER PACK 🐱 ${random}`));
     }
     const checkMyHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.checked) {
@@ -68,13 +69,16 @@ export const Packs = () => {
         dispatch(setPacksData({pageCount: +e.currentTarget.value}));
         dispatch(getPacks());
     }
+    const refreshHandler = () => dispatch(getPacks());
+    const buttonStyle = `${commonStyles.button} ${isLoading && commonStyles.disabled}`;
+
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
     }
 
     const packsList = cardPacks.map(p => {
         const deletePack = () => deletePackHandler(p._id)
-        const updatePack = () => updatePackHandler(p._id, `NEW NAME ${random}`)
+        const updatePack = () => updatePackHandler(p._id, `NEW NAME 😁 ${random}`)
 
         return (
             <tr key={p._id}>
@@ -86,7 +90,7 @@ export const Packs = () => {
                         <Link to={`/cards/${p._id}`}>
                             <SuperButton
                                 disabled={isLoading}
-                                className={`${commonStyles.button} ${isLoading && commonStyles.disabled}`}>
+                                className={buttonStyle}>
                                 Cards
                             </SuperButton>
                         </Link>
@@ -95,13 +99,13 @@ export const Packs = () => {
                             <>
                                 <SuperButton
                                     disabled={isLoading}
-                                    className={`${commonStyles.button} ${isLoading && commonStyles.disabled}`}
+                                    className={buttonStyle}
                                     onClick={deletePack}>
                                     Delete
                                 </SuperButton>
                                 <SuperButton
                                     disabled={isLoading}
-                                    className={`${commonStyles.button} ${isLoading && commonStyles.disabled}`}
+                                    className={buttonStyle}
                                     onClick={updatePack}>
                                     Update
                                 </SuperButton>
@@ -124,9 +128,9 @@ export const Packs = () => {
                                onChangedPage={onChangedPage}/>
                     {error && <div className={`${commonStyles.error} ${styles.error}`}>{error}</div>}
                     <Search searchFunction={searchHandler}/>
-                    <div>
+                    <div className={styles.packNumberWrapper}>
                         <span className={styles.labelSelectPageCounts}>Packs number</span>
-                        <select className={`${commonStyles.button} ${styles.select}`}
+                        <select disabled={isLoading} className={`${commonStyles.button} ${styles.select}`}
                                 onChange={onChangePageCountHandler}>
                             <option value={10}>10</option>
                             <option value={20}>20</option>
@@ -135,6 +139,11 @@ export const Packs = () => {
                             <option value={50}>50</option>
                             <option value={1000}>😻</option>
                         </select>
+                        <SuperButton disabled={isLoading}
+                                     onClick={refreshHandler}
+                                     className={`${buttonStyle} ${styles.refreshBtn}`}>
+                            Refresh page
+                        </SuperButton>
                     </div>
                     <table className={commonStyles.table} width={'100%'} cellPadding="2">
                         <thead>
@@ -157,12 +166,15 @@ export const Packs = () => {
                             <th>
                                 <div className={styles.myPacksButtonsWrapper}>
                                     <label>
-                                        <input type={'checkbox'} checked={user_id !== ''} onChange={checkMyHandler}/>
+                                        <input type={'checkbox'}
+                                               disabled={isLoading}
+                                               checked={user_id !== ''}
+                                               onChange={checkMyHandler}/>
                                         My packs
                                     </label>
                                     <SuperButton
                                         disabled={isLoading}
-                                        className={`${commonStyles.button} ${isLoading && commonStyles.disabled}`}
+                                        className={buttonStyle}
                                         onClick={addPackHandler}>
                                         Add pack
                                     </SuperButton>
