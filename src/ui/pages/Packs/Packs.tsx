@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import commonStyles from "../../../common/styles/commonStyles.module.css";
 import styles from "./Packs.module.css"
 import {
@@ -7,7 +7,8 @@ import {
     getPacks,
     InitialStatePackPageType,
     setPacksData,
-    setPacksError, setPacksSortData,
+    setPacksError,
+    setPacksSortData,
     updatePack
 } from "../../../bll/packReducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -17,6 +18,8 @@ import SuperButton from "../../../common/components/SuperButton/SuperButton";
 import {Link, Navigate} from "react-router-dom";
 import {Search} from "../../../common/components/Search/Search";
 import {Sort} from "../../../common/components/Sort/Sort";
+import {AddPackModal} from "../../../common/components/Modals/AddPackModal/AddPackModal";
+import {Pack} from "./Pack/Pack";
 
 export const Packs = () => {
     const {
@@ -30,22 +33,24 @@ export const Packs = () => {
     const isLoggedIn = useSelector<AppStoreType, boolean>(state => state.loginPage.isLoggedIn);
     const userId = useSelector<AppStoreType, string>(state => state.profilePage._id);
     const isLoading = useSelector<AppStoreType, boolean>(state => state.app.loading);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(setPacksError(''));
         dispatch(getPacks());
     }, [dispatch])
 
-
     const onChangedPage = (currentPage: number) => {
         dispatch(setPacksError(''));
         dispatch(setPacksData({page: currentPage}));
         dispatch(getPacks());
     }
-    const addPackHandler = () => {
-        dispatch(addPack(`SUPER PACK 🐱 ${random}`));
-    }
+
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
+    const addPackHandler = () => setShowAddModal(true);
+    const addPackModalCallback = (name: string) => dispatch(addPack(name));
+
     const checkMyHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.checked) {
             dispatch(setPacksData({user_id: userId}));
@@ -56,8 +61,6 @@ export const Packs = () => {
         }
     }
     const deletePackHandler = (packId: string) => dispatch(deletePack(packId));
-    const updatePackHandler = (packId: string, name: string) => dispatch(updatePack(packId, name));
-    const random = Math.random().toFixed(2);
     const searchHandler = (title: string) => dispatch(getPacks(title));
     const sortNameHandlerUp = () => dispatch(setPacksSortData('up', 'name'));
     const sortNameHandlerDown = () => dispatch(setPacksSortData('down', 'name'));
@@ -72,54 +75,41 @@ export const Packs = () => {
     const refreshHandler = () => dispatch(getPacks());
     const buttonStyle = `${commonStyles.button} ${isLoading && commonStyles.disabled}`;
 
+    const [id, setId] = useState('');
+    const updatePackModalCallback = (name: string) => {
+        dispatch(updatePack(id, name));
+        setShowUpdateModal(false);
+    }
+
+    const onClickUpdatePack = (packId: string) => {
+        setId(packId);
+        setShowUpdateModal(true);
+    }
+
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
     }
 
     const packsList = cardPacks.map(p => {
-        const deletePack = () => deletePackHandler(p._id)
-        const updatePack = () => updatePackHandler(p._id, `NEW NAME 😁 ${random}`)
+        const deletePack = () => deletePackHandler(p._id);
 
         return (
-            <tr key={p._id}>
-                <td>{p.name}</td>
-                <td>{p.cardsCount}</td>
-                <td>{p.updated}</td>
-                <td>
-                    <div>
-                        <Link to={`/cards/${p._id}`}>
-                            <SuperButton
-                                disabled={isLoading}
-                                className={buttonStyle}>
-                                Cards
-                            </SuperButton>
-                        </Link>
-                        {
-                            userId === p.user_id &&
-                            <>
-                                <SuperButton
-                                    disabled={isLoading}
-                                    className={buttonStyle}
-                                    onClick={deletePack}>
-                                    Delete
-                                </SuperButton>
-                                <SuperButton
-                                    disabled={isLoading}
-                                    className={buttonStyle}
-                                    onClick={updatePack}>
-                                    Update
-                                </SuperButton>
-                            </>
-                        }
-                    </div>
-                </td>
-            </tr>
-        )
+            <Pack key={p._id}
+                  id={p._id}
+                  name={p.name}
+                  cardsCount={p.cardsCount}
+                  updated={p.updated}
+                  authorId={p.user_id}
+                  deletePack={deletePack}
+                  updatePackHandler={onClickUpdatePack}/>
+        );
     })
 
 
     return (
         <div className={commonStyles.wrapper}>
+            {showAddModal && <AddPackModal callback={addPackModalCallback} setShow={setShowAddModal}/>}
+            {showUpdateModal && <AddPackModal callback={updatePackModalCallback} setShow={setShowUpdateModal}/>}
             <section className={`${commonStyles.section} ${styles.section}`}>
                 <article className={`${commonStyles.article} ${styles.article}`}>
                     <Paginator totalCount={cardPacksTotalCount}

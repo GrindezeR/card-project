@@ -1,0 +1,17 @@
+.modalBtnWrapper {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.error {
+    top: 60px;
+    color: #fff488;
+    font-weight: bold;
+}
+
+.errorCards {
+    top: 168px;
+    color: #fff488;
+    font-weight: bold;
+}

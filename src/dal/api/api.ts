@@ -214,6 +214,7 @@ export type UpdateCardRequestType = {
     card: {
         _id: string
         question?: string
+        answer?: string
         comments?: string
     }
 }

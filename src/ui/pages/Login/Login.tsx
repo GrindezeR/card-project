@@ -15,8 +15,8 @@ export const Login = () => {
     const isLoggedIn = useSelector<AppStoreType, boolean>(state => state.loginPage.isLoggedIn);
     const error = useSelector<AppStoreType, string>(state => state.loginPage.error);
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('valariot@gmail.com');
+    const [password, setPassword] = useState('12345678');
     const [rememberMe, setRememberMe] = useState(false);
     const [emailError, setEmailError] = useState('')
     const [passwordError, setPasswordError] = useState('')

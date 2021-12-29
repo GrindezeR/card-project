@@ -12,8 +12,8 @@ import {AppStoreType} from "../../bll/store";
 import {LoadingLine} from "../../common/components/LoadingLine/LoadingLine";
 import {CheckEmail} from "../pages/CheckEmail/CheckEmail";
 import {initialize} from "../../bll/appReducer";
-import {Packs} from "../pages/Pack/Packs";
-import {Cards} from "../pages/Card/Cards";
+import {Packs} from "../pages/Packs/Packs";
+import {Cards} from "../pages/Cards/Cards";
 
 function App() {
     const dispatch = useDispatch();

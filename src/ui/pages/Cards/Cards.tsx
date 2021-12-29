@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import styles from "./Cards.module.css";
 import commonStyles from "../../../common/styles/commonStyles.module.css";
 import {Link, Navigate, useParams} from "react-router-dom";
@@ -8,6 +8,8 @@ import {addCard, deleteCard, getCards, InitialCardsStateType, setCardsData, upda
 import {Paginator} from "../../../common/components/Paginator/Paginator";
 import SuperButton from "../../../common/components/SuperButton/SuperButton";
 import {Search} from "../../../common/components/Search/Search";
+import {AddPackModal} from "../../../common/components/Modals/AddPackModal/AddPackModal";
+import {Card} from "./Card/Card";
 
 
 export const Cards = () => {
@@ -29,15 +31,21 @@ export const Cards = () => {
         dispatch(getCards({cardsPack_id: params.pack_id as string}));
     }, [dispatch, params.pack_id])
 
-    const random = Math.random().toFixed(2);
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
+
     const addCardHandler = () => {
+        setShowAddModal(true);
+    }
+    const addCardModalCallback = (question: string, answer?: string) => {
         dispatch(addCard({
             card: {
-                question: `How are you ${random}`,
-                answer: `I dont know ${random}`,
+                question,
+                answer: answer ?? 'no answer',
                 cardsPack_id: params.pack_id ?? ''
             }
         }))
+        setShowAddModal(false);
     }
     const onChangedPage = (currentPage: number) => {
         dispatch(setCardsData({page: currentPage}));
@@ -49,44 +57,35 @@ export const Cards = () => {
             cardQuestion: title
         }))
     }
-    const cardList = cards.map(c => {
-        const deleteCardHandler = () => onClickDeleteCard(c._id)
-        const onClickDeleteCard = (cardId: string) => dispatch(deleteCard({id: cardId}));
-        const updateCardHandler = () => onClickUpdatePack(c._id)
-        const onClickUpdatePack = (cardId: string) => dispatch(updateCard({
+
+    const [id, setId] = useState('');
+    const updateCardModalCallback = (question: string, answer?: string) => {
+        dispatch(updateCard({
             card: {
-                _id: cardId,
-                question: `NEW QUESTION ${random}`
+                _id: id,
+                question,
+                answer: answer ?? 'no answer'
             }
         }));
+    }
+    const onClickUpdatePack = (cardId: string) => {
+        setId(cardId);
+        setShowUpdateModal(true);
+    }
 
-        return (
-            <tr key={c._id}>
-                <td>{c.question}</td>
-                <td>{c.answer}</td>
-                <td>{c.grade}</td>
-                <td>{c.updated}</td>
-                {userId === c.user_id &&
-                    <td>
-                        <div>
-                            <SuperButton
-                                disabled={isLoading}
-                                className={`${commonStyles.button} ${isLoading && commonStyles.disabled}`}
-                                onClick={deleteCardHandler}>
-                                Delete
-                            </SuperButton>
-                            <SuperButton
-                                disabled={isLoading}
-                                className={`${commonStyles.button} ${isLoading && commonStyles.disabled}`}
-                                onClick={updateCardHandler}>
-                                Update
-                            </SuperButton>
+    const cardList = cards.map(c => {
+        const onClickDeleteCard = (cardId: string) => dispatch(deleteCard({id: cardId}));
 
-                        </div>
-                    </td>
-                }
-            </tr>
-        )
+        return <Card key={c._id}
+                     id={c._id}
+                     updateCardHandler={onClickUpdatePack}
+                     deleteCardHandler={onClickDeleteCard}
+                     updated={c.updated}
+                     authorId={c.user_id}
+                     question={c.question}
+                     answer={c.answer}
+                     grade={c.grade}
+        />
     })
 
     if (!isLoggedIn) {
@@ -95,6 +94,12 @@ export const Cards = () => {
 
     return (
         <div className={commonStyles.wrapper}>
+            {showAddModal && <AddPackModal type={"card"}
+                                           callback={addCardModalCallback}
+                                           setShow={setShowAddModal}/>}
+            {showUpdateModal && <AddPackModal type={"card"}
+                                              callback={updateCardModalCallback}
+                                              setShow={setShowUpdateModal}/>}
             <section className={`${commonStyles.section} ${styles.section}`}>
                 <article className={`${commonStyles.article} ${styles.article}`}>
                     <Paginator totalCount={cardsTotalCount}
