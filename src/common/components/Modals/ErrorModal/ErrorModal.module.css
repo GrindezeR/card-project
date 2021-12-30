@@ -1,0 +1,14 @@
+.error {
+    position: absolute;
+    cursor: default;
+    left: 20px;
+    padding: 0 20px;
+    word-wrap: break-word;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    background-color: red;
+    transition: .5s ease-in-out;
+}

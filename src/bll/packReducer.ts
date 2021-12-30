@@ -24,76 +24,27 @@ export const packReducer = (state = initialState, action: PackActionsType): Init
         case "PACK/SET-ERROR":
             return {...state, error: action.error}
         case "PACK/SET-SORT":
-            if (action.sortType === 'name') {
-                if (action.sort === 'up') {
-                    return {
-                        ...state, cardPacks: [...state.cardPacks.sort((a, b) => {
-                            let nameOne = a.name.toLocaleLowerCase();
-                            let nameTwo = b.name.toLocaleLowerCase();
-                            if (nameOne < nameTwo) return -1;
-                            else if (nameOne > nameTwo) return 1;
-                            else return 0
-                        })]
-                    }
-                } else {
-                    return {
-                        ...state, cardPacks: [...state.cardPacks.sort((a, b) => {
-                            let nameOne = a.name.toLocaleLowerCase();
-                            let nameTwo = b.name.toLocaleLowerCase();
-                            if (nameOne > nameTwo) return -1;
-                            else if (nameOne < nameTwo) return 1;
-                            else return 0;
-                        })]
-                    }
+            if (action.sortType === "name" ? action.sort === 'up' : action.sort === 'down') {
+                return {
+                    ...state, cardPacks: [...state.cardPacks.sort((a, b) => {
+                        let A = action.sortType === 'name' ? a[action.sortType].toLowerCase() : a[action.sortType];
+                        let B = action.sortType === 'name' ? b[action.sortType].toLowerCase() : b[action.sortType];
+                        if (A < B) return -1;
+                        else if (A > B) return 1;
+                        else return 0
+                    })]
                 }
-            } else if (action.sortType === 'cardsCount') {
-                if (action.sort === 'up') {
-                    return {
-                        ...state, cardPacks: [...state.cardPacks.sort((a, b) => {
-                            let nameOne = a.cardsCount;
-                            let nameTwo = b.cardsCount;
-                            if (nameOne > nameTwo) return -1;
-                            else if (nameOne < nameTwo) return 1;
-                            else return 0;
-                        })]
-                    }
-                } else {
-                    return {
-                        ...state, cardPacks: [...state.cardPacks.sort((a, b) => {
-                            let nameOne = a.cardsCount;
-                            let nameTwo = b.cardsCount;
-                            if (nameOne < nameTwo) return -1;
-                            else if (nameOne > nameTwo) return 1;
-                            else return 0
-                        })]
-
-                    }
-                }
-            } else if (action.sortType === 'updated') {
-                if (action.sort === 'up') {
-                    return {
-                        ...state, cardPacks: [...state.cardPacks.sort((a, b) => {
-                            let nameOne = a.updated;
-                            let nameTwo = b.updated;
-                            if (nameOne > nameTwo) return -1;
-                            else if (nameOne < nameTwo) return 1;
-                            else return 0;
-                        })]
-                    }
-                } else {
-                    return {
-                        ...state, cardPacks: [...state.cardPacks.sort((a, b) => {
-                            let nameOne = a.updated;
-                            let nameTwo = b.updated;
-                            if (nameOne < nameTwo) return -1;
-                            else if (nameOne > nameTwo) return 1;
-                            else return 0
-                        })]
-
-                    }
+            } else {
+                return {
+                    ...state, cardPacks: [...state.cardPacks.sort((a, b) => {
+                        let A = action.sortType === 'name' ? a[action.sortType].toLowerCase() : a[action.sortType];
+                        let B = action.sortType === 'name' ? b[action.sortType].toLowerCase() : b[action.sortType];
+                        if (A > B) return -1;
+                        else if (A < B) return 1;
+                        else return 0;
+                    })]
                 }
             }
-            return state;
         default:
             return state;
     }
@@ -121,6 +72,8 @@ export const getPacks = (searchParams?: string) =>
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 dispatch(setPacksError(error.response.data.error));
+            } else if (axios.isAxiosError(error)) {
+                dispatch(setPacksError(error.message));
             }
         } finally {
             dispatch(setAppLoading(false));
@@ -149,7 +102,7 @@ export const deletePack = (packId: string): AppThunk =>
         dispatch(setAppLoading(true));
         try {
             await api.deletePack(packId);
-            dispatch(getPacks());
+            await dispatch(getPacks());
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 dispatch(setPacksError(error.response.data.error));
@@ -165,7 +118,7 @@ export const updatePack = (packId: string, name: string): AppThunk =>
         dispatch(setAppLoading(true));
         try {
             await api.updatePack(packId, name);
-            dispatch(getPacks());
+            await dispatch(getPacks());
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 dispatch(setPacksError(error.response.data.error));

@@ -12,7 +12,6 @@ type PropsType = {
 
 export const Search = ({searchFunction}: PropsType) => {
     const isLoading = useSelector<AppStoreType, boolean>(state => state.app.loading);
-
     const [search, setSearch] = useState<string>('')
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.currentTarget.value.trim());

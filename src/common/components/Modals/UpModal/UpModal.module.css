@@ -1,0 +1,24 @@
+.upBlock {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    width: 50px;
+    bottom: 50px;
+    left: 20px;
+    background-color: white;
+    border: 2px solid #56A1BE;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.upBlock:hover {
+    border-color: #bbcccf;
+}
+
+.text {
+    font-size: 18px;
+    font-weight: bold;
+}

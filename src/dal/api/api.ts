@@ -69,6 +69,9 @@ export const api = {
     },
     updateCard(data: UpdateCardRequestType) {
         return instance.put<UpdateCardRequestType>(`cards/card`, {...data})
+    },
+    gradeCard(data: GradeCardRequestType) {
+        return instance.put<GradeCardRequestType>(`/cards/grade`, {...data});
     }
 }
 
@@ -217,4 +220,8 @@ export type UpdateCardRequestType = {
         answer?: string
         comments?: string
     }
+}
+export type GradeCardRequestType = {
+    grade: number,
+    card_id: string,
 }

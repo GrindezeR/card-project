@@ -63,6 +63,7 @@ export const Login = () => {
                                             spanClassName={`${commonStyles.error} ${styles.errorEmail}`}
                                             error={emailError}
                                             onChange={onChangeEmailHandler}
+                                            value={email}
                                             type="text"
                                             placeholder="Email"/>
                         </div>
@@ -72,6 +73,7 @@ export const Login = () => {
                                             spanClassName={`${commonStyles.error} ${styles.errorPassword}`}
                                             error={passwordError || error}
                                             onChange={onChangePasswordHandler}
+                                            value={password}
                                             type="password"
                                             placeholder="Password"/>
                         </div>

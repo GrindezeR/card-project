@@ -2,18 +2,25 @@ import React, {useState} from "react";
 import SuperInputText from "../../SuperInputText/SuperInputText";
 import commonStyles from "../../../styles/commonStyles.module.css";
 import SuperButton from "../../SuperButton/SuperButton";
-import styles from './AddPackModal.module.css';
+import styles from './ItemModal.module.css';
 import {Modal} from "../Modal/Modal";
+import {useSelector} from "react-redux";
+import {AppStoreType} from "../../../../bll/store";
+import {CardType} from "../../../../dal/api/api";
 
 type PropsType = {
     callback: (name: string, answer?: string) => void
     setShow: (show: boolean) => void
-    type?: 'card'
+    type?: 'update pack' | 'add pack' | 'update card' | 'add card'
+    cardId?: string
 }
 
-export const AddPackModal = ({callback, setShow, type}: PropsType) => {
-    const [inputOneValue, setInputOneValue] = useState('');
-    const [inputTwoValue, setInputTwoValue] = useState('');
+export const ItemModal = ({callback, setShow, type, cardId}: PropsType) => {
+    const cards = useSelector<AppStoreType, CardType[]>(state => state.cardPage.cards);
+    const card = cards.find(c => c._id === cardId);
+
+    const [inputOneValue, setInputOneValue] = useState(card ? card.answer : '');
+    const [inputTwoValue, setInputTwoValue] = useState(card ? card.question : '');
     const [error, setError] = useState('');
 
     const onClickApplyPack = () => {
@@ -26,25 +33,31 @@ export const AddPackModal = ({callback, setShow, type}: PropsType) => {
     }
 
     const onClickApplyCard = () => {
-        if (inputOneValue.trim() !== '' && inputTwoValue !== '') {
+        if (inputOneValue.trim() !== '' && inputTwoValue.trim() !== '') {
             callback(inputOneValue, inputTwoValue);
             setShow(false);
         } else {
-            setError('Incorrect name, please try again.')
+            setError('Incorrect name, both fields must be filled, please try again.')
         }
     }
 
-    if (type === 'card') {
+    if (type === 'add card' || type === 'update card') {
         return (
-            <Modal title={'Add card'} setShow={setShow}>
+            <Modal top={35} left={40}
+                   title={type === "update card" ? 'Update card' : 'Add card'}
+                   setShow={setShow}>
                 <div>
                     <SuperInputText className={commonStyles.input}
                                     placeholder={"Question"}
+                                    value={inputOneValue}
                                     onChangeText={setInputOneValue}
+                                    onEnter={onClickApplyCard}
                                     autoFocus
                     />
                     <SuperInputText className={commonStyles.input}
                                     placeholder={"Answer"}
+                                    value={inputTwoValue}
+                                    onEnter={onClickApplyCard}
                                     onChangeText={setInputTwoValue}
                     />
                     {error && <div className={`${commonStyles.error} ${styles.errorCards}`}>{error}</div>}
@@ -64,9 +77,12 @@ export const AddPackModal = ({callback, setShow, type}: PropsType) => {
     }
 
     return (
-        <Modal title={'Add pack'} setShow={setShow}>
+        <Modal top={35} left={40}
+               title={type === "update pack" ? 'Update pack' : 'Add pack'}
+               setShow={setShow}>
             <div>
                 <SuperInputText className={commonStyles.input}
+                                onEnter={onClickApplyPack}
                                 placeholder={"New pack name"}
                                 onChangeText={setInputOneValue}
                                 autoFocus/>

@@ -14,6 +14,8 @@ import {CheckEmail} from "../pages/CheckEmail/CheckEmail";
 import {initialize} from "../../bll/appReducer";
 import {Packs} from "../pages/Packs/Packs";
 import {Cards} from "../pages/Cards/Cards";
+import {UpModal} from "../../common/components/Modals/UpModal/UpModal";
+import {LearnCards} from "../pages/LearnCards/LearnCards";
 
 function App() {
     const dispatch = useDispatch();
@@ -32,6 +34,7 @@ function App() {
         <div className="wrapper">
             <div className="App">
                 {loading && <LoadingLine/>}
+                <UpModal/>
                 <Routes>
                     <Route path={'/'} element={<Login/>}/>
                     <Route path={'login'} element={<Login/>}/>
@@ -42,6 +45,7 @@ function App() {
                     <Route path={'cards/:pack_id'} element={<Cards/>}/>
                     <Route path={'packs'} element={<Packs/>}/>
                     <Route path={'pass_recovery'} element={<PassRecover/>}/>
+                    <Route path={'learn/:pack_id'} element={<LearnCards/>}/>
                     <Route path={'404'} element={<Error404/>}/>
                     <Route path={'*'} element={<Navigate to={'404'}/>}/>
                 </Routes>

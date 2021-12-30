@@ -105,7 +105,8 @@ export const Profile = () => {
                         <div className={styles.btnWrapper}>
                             <SuperButton
                                 className={commonStyles.button}
-                                onClick={onSubmitAvatar}>Apply avatar
+                                onClick={onSubmitAvatar}>
+                                Change avatar
                             </SuperButton>
                             <Link to={'/packs'}>
                                 <SuperButton className={commonStyles.button}>

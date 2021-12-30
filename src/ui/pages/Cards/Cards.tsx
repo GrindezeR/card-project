@@ -4,12 +4,22 @@ import commonStyles from "../../../common/styles/commonStyles.module.css";
 import {Link, Navigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../bll/store";
-import {addCard, deleteCard, getCards, InitialCardsStateType, setCardsData, updateCard} from "../../../bll/cardReducer";
+import {
+    addCard,
+    deleteCard,
+    getCards,
+    InitialCardsStateType,
+    setCardsData,
+    setCardsError,
+    updateCard
+} from "../../../bll/cardReducer";
 import {Paginator} from "../../../common/components/Paginator/Paginator";
 import SuperButton from "../../../common/components/SuperButton/SuperButton";
 import {Search} from "../../../common/components/Search/Search";
-import {AddPackModal} from "../../../common/components/Modals/AddPackModal/AddPackModal";
+import {ItemModal} from "../../../common/components/Modals/ItemModal/ItemModal";
 import {Card} from "./Card/Card";
+import {QuestionModal} from "../../../common/components/Modals/QuestionModal/QuestionModal";
+import {ErrorModal} from "../../../common/components/Modals/ErrorModal/ErrorModal";
 
 
 export const Cards = () => {
@@ -33,6 +43,7 @@ export const Cards = () => {
 
     const [showAddModal, setShowAddModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
+    const [showQuestionModal, setShowQuestionModal] = useState(false);
 
     const addCardHandler = () => {
         setShowAddModal(true);
@@ -58,28 +69,34 @@ export const Cards = () => {
         }))
     }
 
-    const [id, setId] = useState('');
+    const [cardId, setCardId] = useState('');
+    const questionCardModalCallback = () => {
+        dispatch(deleteCard({id: cardId}));
+        setShowQuestionModal(false);
+    }
+    const onClickDeletePack = (packId: string) => {
+        setCardId(packId);
+        setShowQuestionModal(true);
+    }
     const updateCardModalCallback = (question: string, answer?: string) => {
         dispatch(updateCard({
             card: {
-                _id: id,
+                _id: cardId,
                 question,
-                answer: answer ?? 'no answer'
+                answer,
             }
         }));
     }
     const onClickUpdatePack = (cardId: string) => {
-        setId(cardId);
+        setCardId(cardId);
         setShowUpdateModal(true);
     }
 
     const cardList = cards.map(c => {
-        const onClickDeleteCard = (cardId: string) => dispatch(deleteCard({id: cardId}));
-
         return <Card key={c._id}
                      id={c._id}
                      updateCardHandler={onClickUpdatePack}
-                     deleteCardHandler={onClickDeleteCard}
+                     deleteCardHandler={onClickDeletePack}
                      updated={c.updated}
                      authorId={c.user_id}
                      question={c.question}
@@ -94,19 +111,21 @@ export const Cards = () => {
 
     return (
         <div className={commonStyles.wrapper}>
-            {showAddModal && <AddPackModal type={"card"}
-                                           callback={addCardModalCallback}
-                                           setShow={setShowAddModal}/>}
-            {showUpdateModal && <AddPackModal type={"card"}
-                                              callback={updateCardModalCallback}
-                                              setShow={setShowUpdateModal}/>}
+            {showAddModal && <ItemModal type={"add card"}
+                                        callback={addCardModalCallback}
+                                        setShow={setShowAddModal}/>}
+            {showUpdateModal && <ItemModal type={"update card"}
+                                           cardId={cardId}
+                                           callback={updateCardModalCallback}
+                                           setShow={setShowUpdateModal}/>}
+            {showQuestionModal && <QuestionModal callback={questionCardModalCallback} setShow={setShowQuestionModal}/>}
             <section className={`${commonStyles.section} ${styles.section}`}>
                 <article className={`${commonStyles.article} ${styles.article}`}>
                     <Paginator totalCount={cardsTotalCount}
                                pageSize={pageCount}
                                currentPage={page}
                                onChangedPage={onChangedPage}/>
-                    {error && <div className={`${commonStyles.error} ${styles.error}`}>{error}</div>}
+                    {error && <ErrorModal text={error}/>}
                     <Search searchFunction={searchHandler}/>
                     <table className={commonStyles.table} width={'100%'} cellPadding="2">
                         <thead>

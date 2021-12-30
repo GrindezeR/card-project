@@ -49,7 +49,6 @@ export const Card = ({
                             onClick={() => updateCardHandler(id)}>
                             Update
                         </SuperButton>
-
                     </div>
                 </td>
             }
