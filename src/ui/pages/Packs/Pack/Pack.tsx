@@ -21,6 +21,7 @@ export const Pack = ({id, name, cardsCount, updated, authorId, deletePack, updat
     const userId = useSelector<AppStoreType, string>(state => state.profilePage._id);
     const packUpdateDate = new Date(updated)
     const buttonStyle = `${commonStyles.button} ${isLoading && commonStyles.disabled}`;
+    const learnButtonStyle = `${commonStyles.button} ${(isLoading || !cardsCount) && commonStyles.disabled}`;
     return (
         <tr key={id}>
             <td>{name}</td>
@@ -37,8 +38,8 @@ export const Pack = ({id, name, cardsCount, updated, authorId, deletePack, updat
                     </Link>
                     <Link to={`/learn/${id}`}>
                         <SuperButton
-                            disabled={isLoading}
-                            className={buttonStyle}>
+                            disabled={isLoading || !cardsCount}
+                            className={learnButtonStyle}>
                             Learn
                         </SuperButton>
                     </Link>
