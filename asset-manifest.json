@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/card-project/static/css/main.0b8335d8.chunk.css",
-    "main.js": "/card-project/static/js/main.e774d0f2.chunk.js",
-    "main.js.map": "/card-project/static/js/main.e774d0f2.chunk.js.map",
-    "runtime-main.js": "/card-project/static/js/runtime-main.7e09a270.js",
-    "runtime-main.js.map": "/card-project/static/js/runtime-main.7e09a270.js.map",
-    "static/js/2.08223fe5.chunk.js": "/card-project/static/js/2.08223fe5.chunk.js",
-    "static/js/2.08223fe5.chunk.js.map": "/card-project/static/js/2.08223fe5.chunk.js.map",
-    "static/js/3.fcab5851.chunk.js": "/card-project/static/js/3.fcab5851.chunk.js",
-    "static/js/3.fcab5851.chunk.js.map": "/card-project/static/js/3.fcab5851.chunk.js.map",
+    "main.css": "/card-project/static/css/main.337e58fb.chunk.css",
+    "main.js": "/card-project/static/js/main.091abd12.chunk.js",
+    "main.js.map": "/card-project/static/js/main.091abd12.chunk.js.map",
+    "runtime-main.js": "/card-project/static/js/runtime-main.1a9bb59c.js",
+    "runtime-main.js.map": "/card-project/static/js/runtime-main.1a9bb59c.js.map",
+    "static/js/2.a2067841.chunk.js": "/card-project/static/js/2.a2067841.chunk.js",
+    "static/js/2.a2067841.chunk.js.map": "/card-project/static/js/2.a2067841.chunk.js.map",
+    "static/js/3.ee7ccc18.chunk.js": "/card-project/static/js/3.ee7ccc18.chunk.js",
+    "static/js/3.ee7ccc18.chunk.js.map": "/card-project/static/js/3.ee7ccc18.chunk.js.map",
     "index.html": "/card-project/index.html",
-    "static/css/main.0b8335d8.chunk.css.map": "/card-project/static/css/main.0b8335d8.chunk.css.map",
-    "static/js/2.08223fe5.chunk.js.LICENSE.txt": "/card-project/static/js/2.08223fe5.chunk.js.LICENSE.txt",
+    "static/css/main.337e58fb.chunk.css.map": "/card-project/static/css/main.337e58fb.chunk.css.map",
+    "static/js/2.a2067841.chunk.js.LICENSE.txt": "/card-project/static/js/2.a2067841.chunk.js.LICENSE.txt",
     "static/media/404.9494ad47.png": "/card-project/static/media/404.9494ad47.png",
     "static/media/App.css": "/card-project/static/media/background.a95fa633.png",
     "static/media/checkMail.8bd711f4.png": "/card-project/static/media/checkMail.8bd711f4.png",
     "static/media/noAvatar.6c53c0a1.png": "/card-project/static/media/noAvatar.6c53c0a1.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.7e09a270.js",
-    "static/js/2.08223fe5.chunk.js",
-    "static/css/main.0b8335d8.chunk.css",
-    "static/js/main.e774d0f2.chunk.js"
+    "static/js/runtime-main.1a9bb59c.js",
+    "static/js/2.a2067841.chunk.js",
+    "static/css/main.337e58fb.chunk.css",
+    "static/js/main.091abd12.chunk.js"
   ]
 }
